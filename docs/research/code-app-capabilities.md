@@ -98,3 +98,42 @@ Supported by the generated services (`src/generated/services/<Table>Service.ts`,
 - Batch/change-set or deep-insert availability from the SDK.
 - `$expand` and `activitypointer` availability.
 - Annotation attachment upload (`documentbody`).
+
+## Polymorphic lookups spike (follow-up)
+
+Legend: **[doc]** documented, **[src]** read from SDK source (`@microsoft/power-apps@1.5.0`), **[inferred]**, **[unverified]** needs a spike.
+
+### 1. Typed navigation-property binding
+- **[doc]** A polymorphic lookup is set like any single-valued navigation property: `"<NavProp>@odata.bind": "<entityset>(<id>)"`; names are case-sensitive, don't guess. Source: Learn "Use multi-table lookup columns" (webapi/multitable-lookup) and "Associate and disassociate tables" (webapi/associate-disassociate-entities-using-web-api).
+- **[doc]** Nav-prop names per Web API reference: `activitypointer`: `regardingobjectid_account`, `regardingobjectid_contact`; `task`: `regardingobjectid_account_task`, `regardingobjectid_contact_task` (suffix = activity type); `annotation`: `objectid_account`, `objectid_contact`, `objectid_task`, `objectid_phonecall`, `objectid_appointment`. Refs: webapi/reference/task, /annotation.
+- **[inferred]** Custom tables: `regardingobjectid_nvdb_lead_task`, `objectid_nvdb_lead`. Confirm from `$metadata` / relationship metadata.
+- **[doc]** Custom tables need `HasActivities=true` and `HasNotes=true` at creation (cannot be disabled afterwards) to get these relationships. `nvdb_lead` does not exist yet in the dev env (MCP describe), so set both when creating.
+- **[src]** `createRecordAsync<TInput,TResult>(table, record)` passes the payload through as the JSON body; the SDK does not strip `@odata.bind` keys. The official sample (`samples/Dataverse/src/hooks/useContacts.ts`, `LOOKUPS.md`) uses an `any` object with `'msa_managingpartnerid@odata.bind'` and `parentcustomerid_account@odata.bind` (polymorphic Customer).
+- **[unverified]** The opaque host runtime accepts `regardingobjectid_*_task@odata.bind` on TasksService create. Clearing a lookup: LOOKUPS.md says `null`, the sample comment says separate `$ref` DELETE; unverified.
+
+### 2. Raw request vs generated models
+- **[src]** `DataClient` exposes CRUD, file/image upload/download, and `executeAsync`. `executeAsync` supports only `getEntityMetadata` and `customapi` (needs the API registered via `pa app add dataverse-api`). No raw URL request, no `$batch`/change-set. Other actions return "Unsupported Dataverse action".
+- Workaround: cast the payload to `any` / bypass generated types; no codegen workaround is needed for binding. Each table (`task`, `phonecall`, `appointment`, `annotation`, `activitypointer`, `nvdb_*`) must be added with `pa app add data-source --connector dataverse --table <name>`.
+
+### 3. Reading
+- **[src]** `IOperationOptions` has `select, filter, orderBy, top, skip, count, skipToken, maxPageSize, partitionId` only, so **no `$expand`**.
+- **[doc]** Read `_regardingobjectid_value` plus annotations `Microsoft.Dynamics.CRM.lookuplogicalname`, `associatednavigationproperty`, `OData.Community.Display.V1.FormattedValue`.
+- **[src/inferred]** The SDK sends `Prefer: odata.include-annotations=*`, so annotations should be on returned records. **[unverified]** that they survive in `result.data`.
+- Resolve parent names on demand with a per-type `get`.
+
+### 4. Fallback: single-target lookup columns per parent
+- Works with ordinary generated types (plain lookup bind), but activity tables are standard; custom lookups bypass native Regarding, fragment the timeline (one filter per column) and need extra columns per parent type. Not recommended.
+
+### 5. Fallback: Custom API `nvdb_AddActivity` / `nvdb_AddNote`
+- **[doc]** Custom API params support String, Guid, EntityReference, Entity, etc.; Code Apps can call them via generated services (`add-dataverse-action-function`). Wrapper takes `ParentType` (String), `ParentId` (Guid), `ActivityType`, fields; plug-in creates the record and sets Regarding in one transaction. Same mechanism as atomic qualification. Cost: plug-in dev/deploy.
+
+### 6. Timeline across types
+- **[doc]** `activitypointer` holds common columns (`activitytypecode`, `subject`, `scheduledstart/end`, `statecode`, `regardingobjectid`, `ownerid`, `prioritycode`); every activity has a matching row with the same `activityid`; retrieving mixed types via it is the intended use (activitypointer-activity-entity).
+- Query: `filter=_regardingobjectid_value eq <id>`, `orderBy` date + key, `skipToken` paging. Notes are not activities: query `annotation` with `_objectid_value eq <id>` separately, merge/sort client-side. **[unverified]** `activitypointer` as a Code App data source.
+
+### Ranked recommendation
+1. Typed `@odata.bind` via generated Task/PhoneCall/Appointment/Annotation services with an `any` payload and a small (parentType, activityType) to nav-prop helper; nvdb tables created with HasActivities/HasNotes.
+2. Custom API wrapper `nvdb_AddActivity`/`nvdb_AddNote` as guaranteed fallback if the host rejects bind keys.
+3. Per-parent lookup columns: last resort.
+
+Spike checklist: create task with `regardingobjectid_account_task@odata.bind`; create note with `objectid_account@odata.bind`; check `lookuplogicalname` on read; add `activitypointer` as data source and filter by regarding; test clearing a lookup; confirm nvdb nav-prop names in `$metadata`.
