@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- PROTOTYPE (throwaway): Pipedrive-style Sales CRM layout. In-memory only, no backend.
+     Open directly. Drag deal cards between stages. Qualify is a stub of nvdb_QualifyLead. -->
+<html lang="en"><head><meta charset="utf-8"><title>PROTOTYPE - Sales CRM (Pipedrive style)</title>
+<style>
+:root{--g:#017737;--gd:#015d2b;--ink:#21272c;--rail:#21272c;--line:#e4e6e8;--bg:#f6f7f8;--mut:#6d7680}
+*{box-sizing:border-box}body{margin:0;font:13px/1.4 "Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);height:100vh;display:flex;overflow:hidden}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid #c9cdd1;background:#fff;border-radius:4px;padding:5px 12px;font-weight:600;color:var(--ink)}
+.btn.g{background:var(--g);border-color:var(--g);color:#fff}.btn.g:hover{background:var(--gd)}
+.btn.won{background:var(--g);color:#fff;border-color:var(--g)}.btn.lost{background:#d6403f;color:#fff;border-color:#d6403f}
+#rail{width:56px;background:var(--rail);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:6px;flex:none}
+#rail .logo{width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+#rail a{width:40px;height:40px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#b7bdc3;cursor:pointer;font-size:17px}
+#rail a small{font-size:8px;margin-top:-2px}#rail a:hover{background:#343b42;color:#fff}#rail a.on{background:#343b42;color:#fff}
+#main{flex:1;display:flex;flex-direction:column;min-width:0}
+#top{height:52px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 16px;flex:none}
+#top input{flex:1;max-width:420px;padding:7px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.avatar{width:30px;height:30px;border-radius:50%;background:#7a5bd0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px}
+#sub{height:50px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 16px;flex:none}
+.seg{display:flex}.seg button{border:1px solid #c9cdd1;background:#fff;padding:5px 10px}.seg button:first-child{border-radius:4px 0 0 4px}.seg button:last-child{border-radius:0 4px 4px 0;border-left:0}
+.seg button.on{background:#e8eaec}
+#content{flex:1;overflow:auto;min-height:0}
+.sum{margin-left:auto;color:var(--mut)}.sum b{color:var(--ink)}
+/* pipeline */
+.pipe{display:flex;gap:0;height:100%;padding:0}
+.stage{flex:1;min-width:230px;border-right:1px solid var(--line);display:flex;flex-direction:column;background:var(--bg)}
+.shead{background:#fff;padding:8px 14px 8px 18px;position:relative;border-bottom:1px solid var(--line);margin-bottom:8px}
+.shead h4{margin:0;font-size:13px}.shead .m{color:var(--mut);font-size:11.5px}
+.shead:after{content:"";position:absolute;right:-9px;top:0;width:0;height:0;border-top:25px solid transparent;border-bottom:25px solid transparent;border-left:9px solid #fff;z-index:2}
+.shead:before{content:"";position:absolute;right:-10px;top:0;width:0;height:0;border-top:25px solid transparent;border-bottom:25px solid transparent;border-left:9px solid var(--line);z-index:1}
+.cards{flex:1;overflow:auto;padding:0 8px 8px}
+.deal{background:#fff;border:1px solid var(--line);border-radius:5px;padding:10px 12px;margin-bottom:8px;cursor:grab;box-shadow:0 1px 1px #0000000a}
+.deal:hover{box-shadow:0 2px 6px #0000001f}.deal.drag{opacity:.4}.deal b{display:block;font-size:13px}
+.deal .org{color:var(--mut);font-size:12px;display:flex;justify-content:space-between;margin-top:2px}
+.deal .foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;color:var(--mut);font-size:12px}
+.act{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.act.ok{background:#8a9099}.act.over{background:#d6403f}.act.none{background:#f2b705;color:#21272c}
+.stage.over .cards{background:#e3f1e8}
+.add{margin:0 8px 8px;border:1px dashed #b8bec4;border-radius:5px;text-align:center;color:var(--mut);padding:6px;cursor:pointer;background:transparent}
+.add:hover{color:var(--g);border-color:var(--g)}
+/* list & detail */
+.wrap{padding:16px}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line)}
+th{font-size:11.5px;color:var(--mut);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);text-transform:none;background:#fafbfb}
+td{padding:9px 12px;border-bottom:1px solid var(--line)}tr.click{cursor:pointer}tr.click:hover{background:#f3f9f5}
+.pill{display:inline-block;border-radius:10px;padding:1px 9px;font-size:11px;background:#e8eaec}.hot{background:#fbd5d5}.warm{background:#fde9a8}.cold{background:#cfe3fb}
+.detail{display:flex;height:100%}
+.dl{width:320px;background:#fff;border-right:1px solid var(--line);overflow:auto;padding:16px;flex:none}
+.dr{flex:1;overflow:auto;padding:16px}
+.dl h3{margin:0 0 2px;font-size:18px}.dl .sec{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
+.dl .sec h5{margin:0 0 6px;font-size:12px;color:var(--mut);font-weight:600}.dl .f{display:flex;justify-content:space-between;padding:3px 0}
+.dl .f span:first-child{color:var(--mut)}
+.chev{display:flex;margin-bottom:14px}.chev div{flex:1;padding:8px 6px 8px 18px;background:#dfe2e5;color:#4a525a;font-weight:600;font-size:12px;position:relative;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%);margin-right:-4px;cursor:pointer}
+.chev div:first-child{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);padding-left:12px;border-radius:4px 0 0 4px}
+.chev div.done{background:var(--g);color:#fff}.chev .d{font-weight:400;font-size:10.5px;display:block;opacity:.85}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:0;background:#fff;border:1px solid var(--line);border-radius:5px 5px 0 0}
+.tabs button{border:0;background:none;padding:10px 16px;font-weight:600;color:var(--mut);border-bottom:2px solid transparent}.tabs button.on{color:var(--g);border-bottom-color:var(--g)}
+.box{background:#fff;border:1px solid var(--line);border-top:0;padding:12px;border-radius:0 0 5px 5px;margin-bottom:16px}
+.box textarea,.box input{width:100%;border:1px solid var(--line);border-radius:4px;padding:8px;font:inherit;margin-bottom:8px}
+.tl{position:relative;margin-left:10px;border-left:2px solid var(--line);padding-left:16px}
+.tl .it{background:#fff;border:1px solid var(--line);border-radius:5px;padding:9px 12px;margin-bottom:10px;position:relative}
+.tl .it:before{content:"";position:absolute;left:-24px;top:14px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #8a9099}
+.tl .it.tk:before{border-color:var(--g)}.mut{color:var(--mut);font-size:12px}
+.modal{position:fixed;inset:0;background:#21272c99;display:flex;align-items:center;justify-content:center;z-index:50}
+.modal .card{background:#fff;border-radius:6px;width:460px;padding:0}.modal .hd{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:700;font-size:15px}
+.modal .bd{padding:14px 18px}.modal label{display:block;margin:10px 0 3px;color:var(--mut);font-size:12px}.modal select,.modal input{width:100%;padding:7px;border:1px solid #c9cdd1;border-radius:4px}
+.modal .ft{padding:12px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px;background:#fafbfb}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:5px;z-index:60}
+</style></head><body>
+<div id="rail"></div><div id="main"><div id="top"></div><div id="sub"></div><div id="content"></div></div><div id="modal"></div><div id="toast" hidden></div>
+<script>
+const STAGES=['Qualify','Develop','Propose','Close'];
+const D={
+ accounts:[{id:1,name:'Contoso Ltd'},{id:2,name:'Fabrikam'},{id:3,name:'Northwind'},{id:4,name:'Tailspin Toys'}],
+ contacts:[{id:1,name:'Anna Jansen',acc:1,email:'anna@contoso.com',phone:'+31 20 555 0101'},{id:2,name:'Bram de Vries',acc:2,email:'bram@fabrikam.com',phone:'+31 30 555 0102'},
+           {id:3,name:'Chloe Smit',acc:3,email:'chloe@northwind.com',phone:'+31 10 555 0103'},{id:4,name:'Dirk Bos',acc:4,email:'dirk@tailspin.com',phone:'+31 70 555 0104'}],
+ leads:[{id:1,name:'Website enquiry',company:'Wingtip Toys',person:'Eva Kok',rating:'hot',status:'New',src:'Web'},
+        {id:2,name:'Event contact',company:'Adatum',person:'Finn Mol',rating:'warm',status:'Contacted',src:'Event'},
+        {id:3,name:'Referral',company:'Litware',person:'Gina Roos',rating:'cold',status:'New',src:'Referral'}],
+ opps:[{id:1,name:'Contoso renewal',acc:1,con:1,stage:'Develop',status:'Open',rev:42000,close:'2026-12-01',own:'NB',next:'ok'},
+       {id:2,name:'Fabrikam rollout',acc:2,con:2,stage:'Propose',status:'Open',rev:98000,close:'2026-11-15',own:'NB',next:'over'},
+       {id:3,name:'Northwind pilot',acc:3,con:3,stage:'Qualify',status:'Open',rev:12000,close:'2027-01-20',own:'NB',next:'none'},
+       {id:4,name:'Tailspin add-on',acc:4,con:4,stage:'Close',status:'Open',rev:18500,close:'2026-11-02',own:'NB',next:'ok'},
+       {id:5,name:'Contoso training',acc:1,con:1,stage:'Qualify',status:'Open',rev:6400,close:'2027-02-10',own:'NB',next:'ok'}],
+ acts:[{opp:1,type:'Call',text:'Discovery call with Anna',when:'Oct 20',done:true},{opp:1,type:'Note',text:'Budget approved in principle',when:'Oct 21',done:true},
+       {opp:2,type:'Appointment',text:'Demo on site',when:'Oct 25',done:false},{opp:2,type:'Task',text:'Send proposal draft',when:'Oct 22',done:false},
+       {opp:3,type:'Task',text:'Qualify budget',when:'Oct 26',done:false}]
+};
+let S={nav:'deals',view:'kanban',sel:null,tab:'Activity',drag:null,modal:null,toast:'',q:''};
+const acc=id=>D.accounts.find(a=>a.id==id)?.name||'';const con=id=>D.contacts.find(c=>c.id==id);
+const eur=n=>'€'+n.toLocaleString('en-US');const ICON={Call:'📞',Appointment:'📅',Task:'✔',Note:'📝'};
+const dealOf=id=>D.opps.find(o=>o.id==id);
+function toast(t){S.toast=t;const e=document.getElementById('toast');e.textContent=t;e.hidden=false;setTimeout(()=>e.hidden=true,2600)}
+
+function rail(){const n=[['home','⌂','Home'],['leads','◎','Leads'],['deals','$','Deals'],['contacts','☺','Contacts'],['accounts','▦','Accounts']];
+ document.getElementById('rail').innerHTML=`<div class="logo">S</div>`+n.map(([k,i,t])=>`<a class="${S.nav==k?'on':''}" title="${t}" onclick="S.nav='${k}';S.sel=null;render()">${i}<small>${t}</small></a>`).join('')}
+function topbar(){document.getElementById('top').innerHTML=`<input placeholder="Search Sales CRM" value="${S.q}" oninput="S.q=this.value;renderContent()">
+ <div style="margin-left:auto;display:flex;gap:10px;align-items:center"><button class="btn g" onclick="S.modal='newdeal';render()">+ Deal</button><div class="avatar">NB</div></div>`}
+function sub(){const el=document.getElementById('sub');
+ if(S.nav=='deals'&&!S.sel){const open=D.opps.filter(o=>o.status=='Open');
+  el.innerHTML=`<div class="seg"><button class="${S.view=='kanban'?'on':''}" onclick="S.view='kanban';render()">▥ Pipeline</button><button class="${S.view=='list'?'on':''}" onclick="S.view='list';render()">☰ List</button></div>
+  <button class="btn g" onclick="S.modal='newdeal';render()">+ Deal</button><div class="sum"><b>${eur(open.reduce((a,o)=>a+o.rev,0))}</b> · ${open.length} deals</div>`}
+ else if(S.sel){el.innerHTML=`<button class="btn" onclick="S.sel=null;render()">← Back</button><b style="font-size:15px">${dealOf(S.sel).name}</b>
+  <div style="margin-left:auto;display:flex;gap:8px"><button class="btn won" onclick="closeDeal(${S.sel},'Won')">Won</button><button class="btn lost" onclick="closeDeal(${S.sel},'Lost')">Lost</button></div>`}
+ else el.innerHTML=`<b style="font-size:15px;text-transform:capitalize">${S.nav}</b>`}
+
+function card(o){const c=con(o.con);const act={ok:['ok','→'],over:['over','!'],none:['none','＋']}[o.next];
+ return `<div class="deal" draggable="true" ondragstart="S.drag=${o.id};this.classList.add('drag')" ondragend="this.classList.remove('drag')" onclick="S.sel=${o.id};S.tab='Activity';render()">
+ <b>${o.name}</b><div class="org"><span>${acc(o.acc)}</span></div>
+ <div class="foot"><span>👤 ${c?c.name:''} · ${eur(o.rev)}</span><span class="act ${act[0]}" title="Next activity">${act[1]}</span></div></div>`}
+function kanban(){const q=S.q.toLowerCase();return `<div class="pipe">`+STAGES.map(s=>{const os=D.opps.filter(o=>o.stage==s&&o.status=='Open'&&(o.name+acc(o.acc)).toLowerCase().includes(q));
+ return `<div class="stage" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropTo('${s}')">
+ <div class="shead"><h4>${s}</h4><div class="m">${eur(os.reduce((a,o)=>a+o.rev,0))} · ${os.length} deals</div></div>
+ <div class="cards">${os.map(card).join('')}<div class="add" onclick="S.modal='newdeal';render()">+ Add deal</div></div></div>`}).join('')+`</div>`}
+function dropTo(s){const o=dealOf(S.drag);if(o){o.stage=s;toast(`${o.name} moved to ${s}`)}S.drag=null;render()}
+function dealList(){return `<div class="wrap"><table><tr><th>Deal</th><th>Organisation</th><th>Contact</th><th>Value</th><th>Stage</th><th>Close date</th><th>Status</th></tr>`+
+ D.opps.map(o=>`<tr class="click" onclick="S.sel=${o.id};render()"><td><b>${o.name}</b></td><td>${acc(o.acc)}</td><td>${con(o.con)?.name||''}</td><td>${eur(o.rev)}</td><td>${o.stage}</td><td>${o.close}</td><td>${o.status}</td></tr>`).join('')+`</table></div>`}
+function leads(){return `<div class="wrap"><table><tr><th>Lead</th><th>Organisation</th><th>Person</th><th>Source</th><th>Rating</th><th>Status</th><th></th></tr>`+
+ D.leads.map(l=>`<tr><td><b>${l.name}</b></td><td>${l.company}</td><td>${l.person}</td><td>${l.src}</td><td><span class="pill ${l.rating}">${l.rating}</span></td><td>${l.status}</td>
+ <td>${l.status=='Qualified'?'<span class="mut">Converted</span>':`<button class="btn g" onclick="S.modal={q:${l.id}};render()">Qualify → Deal</button>`}</td></tr>`).join('')+`</table></div>`}
+function people(kind){const rows=kind=='contacts'?D.contacts.map(c=>`<tr><td><b>${c.name}</b></td><td>${acc(c.acc)}</td><td>${c.email}</td><td>${c.phone}</td></tr>`):D.accounts.map(a=>`<tr><td><b>${a.name}</b></td><td>${D.opps.filter(o=>o.acc==a.id).length} deals</td></tr>`);
+ return `<div class="wrap"><table>${rows.join('')}</table></div>`}
+function home(){const t=D.acts.filter(a=>!a.done&&a.type!='Note');return `<div class="wrap"><h3 style="margin-top:0">Today</h3><div class="tl">`+t.map(a=>`<div class="it tk"><b>${ICON[a.type]} ${a.text}</b><div class="mut">${a.when} · ${dealOf(a.opp).name}</div></div>`).join('')+`</div></div>`}
+
+function detail(){const o=dealOf(S.sel);const c=con(o.con);const si=STAGES.indexOf(o.stage);
+ const items=D.acts.filter(a=>a.opp==o.id);
+ return `<div class="detail"><div class="dl"><h3>${o.name}</h3><div style="font-size:20px;font-weight:700;margin:4px 0">${eur(o.rev)}</div><span class="pill">${o.status}</span>
+ <div class="sec"><h5>Summary</h5><div class="f"><span>Close date</span><span>${o.close}</span></div><div class="f"><span>Owner</span><span>${o.own}</span></div><div class="f"><span>Stage</span><span>${o.stage}</span></div></div>
+ <div class="sec"><h5>Person</h5><b>${c?.name||'-'}</b><div class="mut">${c?.email||''}<br>${c?.phone||''}</div></div>
+ <div class="sec"><h5>Organisation</h5><b>${acc(o.acc)}</b></div></div>
+ <div class="dr"><div class="chev">${STAGES.map((s,i)=>`<div class="${i<=si?'done':''}" onclick="dealOf(${o.id}).stage='${s}';render()">${s}<span class="d">${i==si?'Current':''}</span></div>`).join('')}</div>
+ <div class="tabs">${['Notes','Activity','Call','Email'].map(t=>`<button class="${S.tab==t?'on':''}" onclick="S.tab='${t}';render()">${t}</button>`).join('')}</div>
+ <div class="box">${S.tab=='Notes'?`<textarea rows="3" placeholder="Take a note, @name..."></textarea><button class="btn g" onclick="addAct(${o.id},'Note')">Save note</button>`
+  :S.tab=='Activity'?`<input placeholder="Activity subject (task, call, appointment)"><button class="btn g" onclick="addAct(${o.id},'Task')">Schedule activity</button>`
+  :`<div class="mut">Not part of v1 scope (stub): ${S.tab} logging is covered by Phone Call / Task activities.</div>`}</div>
+ <h5 class="mut" style="margin:0 0 8px">PLANNED</h5><div class="tl">${items.filter(a=>!a.done).map(a=>`<div class="it tk"><b>${ICON[a.type]} ${a.text}</b><div class="mut">${a.when} <button class="btn" style="padding:0 8px;margin-left:8px" onclick="D.acts.find(x=>x.text=='${a.text}').done=true;render()">Mark done</button></div></div>`).join('')||'<div class="mut">Nothing planned</div>'}</div>
+ <h5 class="mut" style="margin:16px 0 8px">HISTORY</h5><div class="tl">${items.filter(a=>a.done).map(a=>`<div class="it"><b>${ICON[a.type]} ${a.text}</b><div class="mut">${a.when}</div></div>`).join('')}</div></div></div>`}
+function addAct(id,type){D.acts.push({opp:id,type,text:type=='Note'?'New note (stub)':'New activity (stub)',when:'Today',done:type=='Note'});render()}
+function closeDeal(id,st){const o=dealOf(id);o.status=st;toast(`${o.name} marked ${st.toLowerCase()}`);S.sel=null;render()}
+
+function modal(){const m=S.modal;const el=document.getElementById('modal');if(!m){el.innerHTML='';return}
+ if(m=='newdeal'){el.innerHTML=`<div class="modal"><div class="card"><div class="hd">Add deal</div><div class="bd"><label>Deal title</label><input id="nd"><label>Organisation</label><select>${D.accounts.map(a=>`<option>${a.name}</option>`).join('')}</select><label>Value</label><input value="0"></div>
+  <div class="ft"><button class="btn" onclick="S.modal=null;render()">Cancel</button><button class="btn g" onclick="S.modal=null;toast('Deal created (stub)');render()">Save</button></div></div></div>`;return}
+ const l=D.leads.find(x=>x.id==m.q);
+ el.innerHTML=`<div class="modal"><div class="card"><div class="hd">Qualify lead: ${l.name}</div><div class="bd">
+ <label>Organisation</label><select><option>Create new "${l.company}"</option>${D.accounts.map(a=>`<option>Use existing: ${a.name}</option>`).join('')}</select>
+ <label>Person</label><select><option>Create new "${l.person}"</option>${D.contacts.map(c=>`<option>Use existing: ${c.name}</option>`).join('')}</select>
+ <label>Deal title</label><input value="${l.company} deal"><label>Value</label><input value="10000"></div>
+ <div class="ft"><button class="btn" onclick="S.modal=null;render()">Cancel</button><button class="btn g" onclick="qualify(${l.id})">Convert to deal</button></div></div></div>`}
+function qualify(id){const l=D.leads.find(x=>x.id==id);l.status='Qualified';const a={id:D.accounts.length+1,name:l.company};D.accounts.push(a);
+ const c={id:D.contacts.length+1,name:l.person,acc:a.id,email:'',phone:''};D.contacts.push(c);
+ const o={id:D.opps.length+1,name:l.company+' deal',acc:a.id,con:c.id,stage:'Qualify',status:'Open',rev:10000,close:'2027-02-01',own:'NB',next:'none'};D.opps.push(o);
+ S.modal=null;S.nav='deals';S.sel=o.id;toast('Organisation, person and deal created; lead qualified');render()}
+
+function renderContent(){const el=document.getElementById('content');
+ el.innerHTML=S.sel?detail():S.nav=='deals'?(S.view=='kanban'?kanban():dealList()):S.nav=='leads'?leads():S.nav=='home'?home():people(S.nav)}
+function render(){rail();topbar();sub();renderContent();modal()}
+render();
+</script></body></html>
