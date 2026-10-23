@@ -1,0 +1,7 @@
+.env
+.vscode/settings.json
+.token_cache.bin
+.dataverse/
+__pycache__/
+*.pyc
+solutions/*.zip
