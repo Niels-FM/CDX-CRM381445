@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Role id="{003e12bd-4ed1-f111-a059-0022480ab59f}" name="Sales Manager" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IsCustomizable>1</IsCustomizable>
+  <IsAutoAssigned>0</IsAutoAssigned>
+  <RolePrivileges>
+    <RolePrivilege name="prvAppendAccount" level="Local" />
+    <RolePrivilege name="prvAppendActivity" level="Local" />
+    <RolePrivilege name="prvAppendContact" level="Local" />
+    <RolePrivilege name="prvAppendNote" level="Local" />
+    <RolePrivilege name="prvAppendnvdb_Lead" level="Local" />
+    <RolePrivilege name="prvAppendnvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvAppendToAccount" level="Local" />
+    <RolePrivilege name="prvAppendToActivity" level="Local" />
+    <RolePrivilege name="prvAppendToContact" level="Local" />
+    <RolePrivilege name="prvAppendToNote" level="Local" />
+    <RolePrivilege name="prvAppendTonvdb_Lead" level="Local" />
+    <RolePrivilege name="prvAppendTonvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvAssignAccount" level="Local" />
+    <RolePrivilege name="prvAssignContact" level="Local" />
+    <RolePrivilege name="prvAssignnvdb_Lead" level="Local" />
+    <RolePrivilege name="prvAssignnvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvCreateAccount" level="Local" />
+    <RolePrivilege name="prvCreateActivity" level="Local" />
+    <RolePrivilege name="prvCreateContact" level="Local" />
+    <RolePrivilege name="prvCreateNote" level="Local" />
+    <RolePrivilege name="prvCreatenvdb_Lead" level="Local" />
+    <RolePrivilege name="prvCreatenvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvDeleteAccount" level="Local" />
+    <RolePrivilege name="prvDeleteActivity" level="Local" />
+    <RolePrivilege name="prvDeleteContact" level="Local" />
+    <RolePrivilege name="prvDeleteNote" level="Local" />
+    <RolePrivilege name="prvDeletenvdb_Lead" level="Local" />
+    <RolePrivilege name="prvDeletenvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvReadAccount" level="Local" />
+    <RolePrivilege name="prvReadActivity" level="Local" />
+    <RolePrivilege name="prvReadBusinessUnit" level="Global" />
+    <RolePrivilege name="prvReadCanvasApp" level="Global" />
+    <RolePrivilege name="prvReadContact" level="Local" />
+    <RolePrivilege name="prvReadNote" level="Local" />
+    <RolePrivilege name="prvReadnvdb_Lead" level="Local" />
+    <RolePrivilege name="prvReadnvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvReadOrganization" level="Global" />
+    <RolePrivilege name="prvReadSharePointData" level="Global" />
+    <RolePrivilege name="prvReadSharePointDocument" level="Global" />
+    <RolePrivilege name="prvReadTeam" level="Global" />
+    <RolePrivilege name="prvReadTransactionCurrency" level="Global" />
+    <RolePrivilege name="prvReadUser" level="Global" />
+    <RolePrivilege name="prvWriteAccount" level="Local" />
+    <RolePrivilege name="prvWriteActivity" level="Local" />
+    <RolePrivilege name="prvWriteContact" level="Local" />
+    <RolePrivilege name="prvWriteNote" level="Local" />
+    <RolePrivilege name="prvWritenvdb_Lead" level="Local" />
+    <RolePrivilege name="prvWritenvdb_Opportunity" level="Local" />
+    <RolePrivilege name="prvWriteSharePointData" level="Global" />
+  </RolePrivileges>
+</Role>

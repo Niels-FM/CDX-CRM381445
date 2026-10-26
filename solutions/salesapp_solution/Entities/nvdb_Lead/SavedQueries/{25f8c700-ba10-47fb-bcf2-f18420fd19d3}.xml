@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{25f8c700-ba10-47fb-bcf2-f18420fd19d3}</savedqueryid>
+    <layoutxml>
+      <grid name="nvdb_leads" jump="nvdb_topic" select="1" icon="1" preview="1">
+        <row name="nvdb_lead" id="nvdb_leadid">
+          <cell name="nvdb_topic" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="nvdb_lead">
+          <attribute name="nvdb_leadid" />
+          <attribute name="nvdb_topic" />
+          <attribute name="createdon" />
+          <order attribute="nvdb_topic" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Lead Associated View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
