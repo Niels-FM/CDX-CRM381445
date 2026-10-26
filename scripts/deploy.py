@@ -56,7 +56,8 @@ def stage_app(push=True):
     if not os.path.exists(os.path.join(APP_DIR, "power.config.json")):
         _step(["pa", "app", "init", "--environment-id", env_id, "--display-name", "Sales CRM", "--app-type", "CodeApp",
                "--build-path", "./dist", "--non-interactive"], "pa app init")
-    _step(["pa", "app", "push", "--environment-id", env_id, "--solution-id", dv.solution_id(), "--non-interactive"], "pa app push")
+    # the project-local pa reads the environment from power.config.json and has no --environment-id flag
+    _step(["pa", "app", "push", "--solution-id", dv.solution_id(), "--non-interactive"], "pa app push")
 
 
 def _step(cmd, label):

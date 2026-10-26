@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "appId": "4a24f8a6-6ee0-4d71-bc28-4ce368255a3b",
+  "appDisplayName": "Sales CRM",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "2babf09f-db97-edde-a7ed-bfd1c761ea04",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {}
+}
