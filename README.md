@@ -1,0 +1,43 @@
+# Sales CRM (Power Apps code app on Dataverse)
+
+Tables `nvdb_lead` and `nvdb_opportunity`, the Sales Rep / Sales Manager security roles, seed data and a Vite + React + TypeScript app shell. Terms follow `GLOSSARY.md`.
+
+## Setup
+
+1. Copy `.env` (gitignored) with `DATAVERSE_URL`, `SOLUTION_NAME=salesapp_solution`, `PUBLISHER_PREFIX=nvdb`.
+2. Be signed in to the Dataverse CLI / `pac` for the environment. Install the Power Apps CLI: `npm i -g @microsoft/power-apps-cli` (command `pa`), then `pa auth login --account <you>`.
+3. Prerequisites: code apps enabled on the environment (admin center > Environments > Settings > Product > Features > Power Apps code apps); users need a Power Apps Premium or pay-as-you-go licence.
+
+## Scripts (`scripts\`)
+
+| Script | Purpose |
+|---|---|
+| `deploy.py` | Entry point. Runs preflight, then stages `--tables --roles --plugin --app` (none given = all); `--skip-<stage>`, `--no-push`, `--no-export`, `--preflight-only` |
+| `build_tables.py` | Idempotent creation of the tables, Choices and lookups |
+| `build_roles.py` | Idempotent Sales Rep / Sales Manager roles and privileges |
+| `seed.py` | Idempotent `[seed]`-prefixed data; `--owners repA@x repB@x` alternates owners of Leads and Opportunities |
+| `export_solution.py` | Exports and unpacks `salesapp_solution` into `solutions\` |
+| `preflight.py` | Checks auth, solution, tables, roles, `pa` access |
+
+Unit tests: `cd scripts; python -m unittest discover -s tests`.
+
+Beyond the matrix in ticket #5, roles also get Append/AppendTo on activities and notes, and Read on reference tables (user, team, business unit, currency, organization, canvasapp) so the app opens.
+
+## Create Rep A / Rep B / Manager test users
+
+1. In the Microsoft 365 admin center (or Entra) create three users: Rep A, Rep B, Manager. Give each a Power Apps Premium licence and add them to the environment.
+2. In the Power Platform admin center > Environment > Settings > Users, assign roles manually: Rep A and Rep B get **Sales Rep**; Manager gets **Sales Manager**.
+3. Run `python scripts\seed.py --owners repA@domain repB@domain` to spread Leads and Opportunities over both reps.
+4. Share the code app with the three users.
+
+## App (`app\`)
+
+`npm install`, `npm run build`, `npm run lint`. All Dataverse terms live in `src\labels.ts`.
+Push: `python scripts\deploy.py --app` (runs `pa app init` if `power.config.json` is missing, then `pa app push --solution-id <id>`).
+
+## Status
+
+- Not done: the first `pa app push` and opening the app as a test user. `pa` needs an interactive MFA browser sign-in for this tenant, which could not be done unattended. The app builds (`deploy.py --app --no-push`).
+- The plugin stage is a stub until the plug-in/Custom API tickets land.
+- `pac solution export` hit MFA, so `export_solution.py` uses the Web API ExportSolution action plus `pac solution unpack`.
+- The test users are documented, not created.

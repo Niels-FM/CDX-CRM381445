@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_nvdb_lead" />
+  <EntityRelationship Name="business_unit_nvdb_opportunity" />
+  <EntityRelationship Name="lk_nvdb_lead_createdby" />
+  <EntityRelationship Name="lk_nvdb_lead_modifiedby" />
+  <EntityRelationship Name="lk_nvdb_opportunity_createdby" />
+  <EntityRelationship Name="lk_nvdb_opportunity_modifiedby" />
+  <EntityRelationship Name="nvdb_account_lead_accountid" />
+  <EntityRelationship Name="nvdb_account_opportunity_accountid" />
+  <EntityRelationship Name="nvdb_contact_lead_contactid" />
+  <EntityRelationship Name="nvdb_contact_opportunity_contactid" />
+  <EntityRelationship Name="nvdb_lead_opportunity_sourceleadid" />
+  <EntityRelationship Name="owner_nvdb_lead" />
+  <EntityRelationship Name="owner_nvdb_opportunity" />
+  <EntityRelationship Name="team_nvdb_lead" />
+  <EntityRelationship Name="team_nvdb_opportunity" />
+  <EntityRelationship Name="TransactionCurrency_nvdb_Opportunity" />
+  <EntityRelationship Name="user_nvdb_lead" />
+  <EntityRelationship Name="user_nvdb_opportunity" />
+</EntityRelationships>

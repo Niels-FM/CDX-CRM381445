@@ -1,0 +1,37 @@
+/** Every user-visible term lives here (Dataverse terms, see GLOSSARY.md). A later rename is a one-file change. */
+export const L = {
+  app: { name: "Sales CRM" },
+  nav: {
+    home: "Home",
+    leads: "Leads",
+    opportunities: "Opportunities",
+    contacts: "Contacts",
+    accounts: "Accounts",
+  },
+  entity: {
+    lead: { singular: "Lead", plural: "Leads" },
+    opportunity: { singular: "Opportunity", plural: "Opportunities" },
+    account: { singular: "Account", plural: "Accounts" },
+    contact: { singular: "Contact", plural: "Contacts" },
+    activity: { singular: "Activity", plural: "Activities" },
+    note: { singular: "Note", plural: "Notes" },
+  },
+  stage: { qualify: "Qualify", develop: "Develop", propose: "Propose", close: "Close" },
+  opportunityStatus: { open: "Open", won: "Won", lost: "Lost" },
+  leadStatus: { new: "New", contacted: "Contacted", qualified: "Qualified", disqualified: "Disqualified" },
+  leadSource: { web: "Web", referral: "Referral", event: "Event", coldCall: "Cold call", other: "Other" },
+  leadRating: { hot: "Hot", warm: "Warm", cold: "Cold" },
+  action: { qualify: "Qualify", won: "Won", lost: "Lost", refresh: "Refresh", add: "Add" },
+  page: {
+    dashboardTitle: "Dashboard",
+    leadsTitle: "Leads",
+    pipelineTitle: "Pipeline",
+    opportunityTitle: "Opportunity",
+    accountsTitle: "Accounts",
+    contactsTitle: "Contacts",
+    comingSoon: "Coming soon",
+    notFound: "Page not found",
+  },
+  search: { placeholder: "Search Accounts, Contacts, Leads and Opportunities" },
+  role: { rep: "Sales Rep", manager: "Sales Manager" },
+} as const;
