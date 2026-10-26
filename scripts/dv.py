@@ -34,6 +34,13 @@ def cli_path():
     return shutil.which("dataverse.cmd") or shutil.which("dataverse")
 
 
+def run_cli(args, timeout=300, cwd=None):
+    """Run a CLI that may be a .cmd shim (dataverse, pa, npm); arguments are quoted so cmd.exe keeps & intact."""
+    exe = shutil.which(args[0]) or args[0]
+    r = subprocess.run(" ".join(f'"{c}"' for c in [exe, *args[1:]]), capture_output=True, text=True, encoding="utf-8", timeout=timeout, cwd=cwd)
+    return r.returncode, (r.stdout + r.stderr).strip()
+
+
 def request(method, path, body=None, headers=None, solution=None, url=None):
     """Return (status, response_headers, parsed_json_or_None). Raises DataverseError on >= 400."""
     exe = cli_path()
