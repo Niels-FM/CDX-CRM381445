@@ -32,7 +32,7 @@ Beyond the matrix in ticket #5, roles also get Append/AppendTo on activities and
 
 ## App (`app\`)
 
-`npm install`, `npm run build`, `npm run lint`. All Dataverse terms live in `src\labels.ts`.
+`npm install`, `npm run build`, `npm run lint`, `npm test` (vitest). All Dataverse terms live in `src\labels.ts`.
 Push: `python scripts\deploy.py --app` (runs `pa app init` if `power.config.json` is missing, then `pa app push --solution-id <id>`).
 
 ## Status
@@ -41,3 +41,4 @@ Push: `python scripts\deploy.py --app` (runs `pa app init` if `power.config.json
 - The plugin stage is a stub until the plug-in/Custom API tickets land.
 - `pac solution export` hit MFA, so `export_solution.py` uses the Web API ExportSolution action plus `pac solution unpack`.
 - The test users are documented, not created.
+- Accounts and Contacts (#16): lists with filter box, create/edit pages, soft duplicate warnings (Account by name, Contact by email), read-only Opportunities panel (empty until the pipeline ticket). Client logic is in pp\src\domain\customers.ts (unit tested on a mocked CustomerService); pp\src\data\customerService.ts is the thin Dataverse seam on the SDK DataClient, with hand-declared data sources. Not verified against a live environment (no pa sign-in): data-source info, the parentcustomerid_account@odata.bind write and skipToken paging still need a first run as a test user.

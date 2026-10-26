@@ -1,5 +1,4 @@
-import { data } from "@microsoft/power-apps";
-import type { DataClient } from "@microsoft/power-apps/data";
+import { getClient, type DataClient } from "@microsoft/power-apps/data";
 import {
   odataString,
   type Account,
@@ -150,9 +149,13 @@ export function createDataverseCustomerService(client: DataClient): CustomerServ
   };
 }
 
-export const customerService: CustomerService = createDataverseCustomerService(
-  data.getClient({
-    account: { tableId: "account", version: "v1.0", primaryKey: "accountid", dataSourceType: "Dataverse" },
-    contact: { tableId: "contact", version: "v1.0", primaryKey: "contactid", dataSourceType: "Dataverse" },
-  }),
-);
+let instance: CustomerService | undefined;
+export function getCustomerService(): CustomerService {
+  instance ??= createDataverseCustomerService(
+    getClient({
+      account: { tableId: "account", version: "v1.0", primaryKey: "accountid", dataSourceType: "Dataverse", apis: {} },
+      contact: { tableId: "contact", version: "v1.0", primaryKey: "contactid", dataSourceType: "Dataverse", apis: {} },
+    }),
+  );
+  return instance;
+}
