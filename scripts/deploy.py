@@ -17,7 +17,7 @@ import preflight
 
 STAGES = ("tables", "roles", "plugin", "app")
 APP_DIR = os.path.join(dv.ROOT, "app")
-PLUGIN_DIR = os.path.join(dv.ROOT, "plugin")
+PLUGIN_DIR = os.path.join(dv.ROOT, "plugins")
 
 
 def stage_tables():
@@ -31,14 +31,9 @@ def stage_roles():
 
 
 def stage_plugin():
-    projects = [f for f in os.listdir(PLUGIN_DIR) if f.endswith(".csproj")] if os.path.isdir(PLUGIN_DIR) else []
-    if not projects:
-        dv.say("plugin: no plugin project yet (added by a later ticket); nothing to deploy")
-        return
-    code, out = dv.run_cli(["pac", "plugin", "push", "--pluginId", os.environ["NVDB_PLUGIN_ID"]], cwd=PLUGIN_DIR)
-    dv.say(out)
-    if code:
-        raise SystemExit("plugin push failed")
+    # `pac plugin push` cannot register steps, so register_plugin.py builds, uploads and registers everything via the Web API
+    import register_plugin
+    register_plugin.run()
     apis = os.path.join(os.path.dirname(__file__), "build_customapis.py")
     if os.path.exists(apis):
         import build_customapis
