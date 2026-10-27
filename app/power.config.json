@@ -28,6 +28,11 @@
           "entitySetName": "nvdb_opportunities",
           "logicalName": "nvdb_opportunity",
           "isHidden": false
+        },
+        "users": {
+          "entitySetName": "systemusers",
+          "logicalName": "systemuser",
+          "isHidden": false
         }
       },
       "environmentVariableName": ""
