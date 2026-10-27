@@ -26,6 +26,14 @@ STEPS = [
         "filtering": "nvdb_leadstatus",
         "preimage": "nvdb_leadstatus",
     },
+    {
+        "type": "NVDB.SalesCrm.Plugins.OpportunityGuard",
+        "name": "nvdb_opportunity Update: Won/Lost read-only, Manager-only reopen (pre-operation)",
+        "message": "Update",
+        "table": "nvdb_opportunity",
+        "stage": 20,
+        "filtering": None,
+    },
 ]
 # Plug-in types without a step (Custom API implementations); the Custom API tickets append to this list.
 TYPES = [s["type"] for s in STEPS]

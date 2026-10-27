@@ -8,8 +8,12 @@ export * as AccountsModel from './models/AccountsModel';
 export * as CommonModels from './models/CommonModels';
 export * as ContactsModel from './models/ContactsModel';
 export * as Nvdb_leadsModel from './models/Nvdb_leadsModel';
+export * as Nvdb_opportunitiesModel from './models/Nvdb_opportunitiesModel';
+export * as SystemusersModel from './models/SystemusersModel';
 
 // Services
 export * from './services/AccountsService';
 export * from './services/ContactsService';
 export * from './services/Nvdb_leadsService';
+export * from './services/Nvdb_opportunitiesService';
+export * from './services/SystemusersService';

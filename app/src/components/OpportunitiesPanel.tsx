@@ -4,7 +4,7 @@ import { L } from "../labels.ts";
 import { getCustomerService } from "../data/customerService.ts";
 import type { OpportunitySummary } from "../domain/customers.ts";
 
-/** Read-only list of the parent's Opportunities; empty until the pipeline ticket lands. */
+/** Read-only list of the parent's Opportunities. */
 export default function OpportunitiesPanel({ kind, id }: { kind: "account" | "contact"; id: string }) {
   const [rows, setRows] = useState<OpportunitySummary[] | null>(null);
 

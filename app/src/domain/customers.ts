@@ -51,7 +51,6 @@ export interface CustomerService {
   updateAccount(id: string, d: AccountDraft): Promise<Account>;
   createContact(d: ContactDraft): Promise<Contact>;
   updateContact(id: string, d: ContactDraft): Promise<Contact>;
-  /** Stub (empty) until the pipeline ticket lands. */
   listOpportunitiesFor(parent: { kind: "account" | "contact"; id: string }): Promise<OpportunitySummary[]>;
 }
 

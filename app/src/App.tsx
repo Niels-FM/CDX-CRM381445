@@ -4,6 +4,8 @@ import Placeholder from "./pages/Placeholder.tsx";
 import { AccountPage, AccountsPage } from "./pages/Accounts.tsx";
 import { ContactPage, ContactsPage } from "./pages/Contacts.tsx";
 import { LeadPage, LeadsPage } from "./pages/Leads.tsx";
+import PipelinePage from "./pages/Pipeline.tsx";
+import OpportunityPage from "./pages/Opportunity.tsx";
 import { L } from "./labels.ts";
 
 export default function App() {
@@ -20,8 +22,8 @@ export default function App() {
             <Route path="/leads" element={<LeadsPage />} />
             <Route path="/leads/new" element={<LeadPage />} />
             <Route path="/leads/:id" element={<LeadPage />} />
-            <Route path="/pipeline" element={<Placeholder title={L.page.pipelineTitle} />} />
-            <Route path="/opportunities/:id" element={<Placeholder title={L.page.opportunityTitle} />} />
+            <Route path="/pipeline" element={<PipelinePage />} />
+            <Route path="/opportunities/:id" element={<OpportunityPage />} />
             <Route path="/accounts" element={<AccountsPage />} />
             <Route path="/accounts/new" element={<AccountPage />} />
             <Route path="/accounts/:id" element={<AccountPage />} />

@@ -25,5 +25,19 @@ export const dataSourcesInfo = {
     "primaryKey": "nvdb_leadid",
     "dataSourceType": "Dataverse",
     "apis": {}
+  },
+  "nvdb_opportunities": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "nvdb_opportunityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "systemusers": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "systemuserid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
   }
 };

@@ -1,4 +1,5 @@
 import { getClient, type DataClient } from "@microsoft/power-apps/data";
+import { L } from "../labels.ts";
 import { dataSourcesInfo } from "../../.power/schemas/appschemas/dataSourcesInfo";
 import {
   odataString,
@@ -70,6 +71,10 @@ const contactBody = (d: ContactDraft) => ({
  */
 const ACCOUNTS = "accounts";
 const CONTACTS = "contacts";
+const OPPORTUNITIES = "nvdb_opportunities";
+const STAGE_BASE = 534210000;
+const STAGE_LABELS = [L.stage.qualify, L.stage.develop, L.stage.propose, L.stage.close];
+const STATUS_LABELS = [L.opportunityStatus.open, L.opportunityStatus.won, L.opportunityStatus.lost];
 
 export function createDataverseCustomerService(client: DataClient): CustomerService {
   const must = <T>(r: { success: boolean; data: T; error?: unknown }): T => {
@@ -151,8 +156,29 @@ export function createDataverseCustomerService(client: DataClient): CustomerServ
       must(await client.updateRecordAsync(CONTACTS, id, contactBody(d)));
       return getContact(id);
     },
-    // Opportunities (nvdb_opportunity) arrive with the pipeline ticket.
-    listOpportunitiesFor: async () => [],
+    async listOpportunitiesFor({ kind, id }) {
+      const column = kind === "account" ? "_nvdb_accountid_value" : "_nvdb_contactid_value";
+      const rows = must(
+        await client.retrieveMultipleRecordsAsync<{
+          nvdb_opportunityid: string;
+          nvdb_name: string | null;
+          nvdb_stage: number | null;
+          nvdb_opportunitystatus: number | null;
+          nvdb_estimatedrevenue: number | null;
+        }>(OPPORTUNITIES, {
+          select: ["nvdb_opportunityid", "nvdb_name", "nvdb_stage", "nvdb_opportunitystatus", "nvdb_estimatedrevenue"],
+          filter: `${column} eq ${id}`,
+          top: 50,
+        }),
+      );
+      return rows.map((r) => ({
+        id: r.nvdb_opportunityid,
+        name: r.nvdb_name ?? "",
+        stage: STAGE_LABELS[(r.nvdb_stage ?? STAGE_BASE) - STAGE_BASE] ?? "",
+        status: STATUS_LABELS[(r.nvdb_opportunitystatus ?? STAGE_BASE) - STAGE_BASE] ?? "",
+        estimatedRevenue: r.nvdb_estimatedrevenue,
+      }));
+    },
   };
 }
 
