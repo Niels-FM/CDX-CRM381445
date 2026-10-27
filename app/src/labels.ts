@@ -57,6 +57,21 @@ export const L = {
       email: "Email", jobTitle: "Job title", account: "Account",
     },
   },
+  lead: {
+    newLead: "New Lead",
+    duplicate: "A Lead with the same email, or the same name and company, already exists:",
+    field: { company: "Company", status: "Status", source: "Source", rating: "Rating", disqualifyReason: "Disqualify reason" },
+    action: {
+      contacted: "Mark Contacted",
+      new: "Mark New",
+      disqualify: "Disqualify",
+      reopen: "Un-disqualify",
+      confirmDisqualify: "Confirm disqualify",
+    },
+    reasonRequired: "Enter a reason to disqualify",
+    lockedNote: "Qualified and Disqualified Leads cannot be edited.",
+    reopenManagerOnly: "Only a Sales Manager can un-disqualify a Lead.",
+  },
   search: { placeholder: "Search Accounts, Contacts, Leads and Opportunities" },
   role: { rep: "Sales Rep", manager: "Sales Manager" },
 } as const;

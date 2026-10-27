@@ -23,6 +23,11 @@
           "entitySetName": "contacts",
           "logicalName": "contact",
           "isHidden": false
+        },
+        "leads": {
+          "entitySetName": "nvdb_leads",
+          "logicalName": "nvdb_lead",
+          "isHidden": false
         }
       },
       "environmentVariableName": ""
