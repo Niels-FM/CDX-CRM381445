@@ -3,6 +3,8 @@ import IconRail from "./components/IconRail.tsx";
 import Placeholder from "./pages/Placeholder.tsx";
 import { AccountPage, AccountsPage } from "./pages/Accounts.tsx";
 import { ContactPage, ContactsPage } from "./pages/Contacts.tsx";
+import PipelinePage from "./pages/Pipeline.tsx";
+import OpportunityPage from "./pages/Opportunity.tsx";
 import { L } from "./labels.ts";
 
 export default function App() {
@@ -17,8 +19,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Placeholder title={L.page.dashboardTitle} />} />
             <Route path="/leads" element={<Placeholder title={L.page.leadsTitle} />} />
-            <Route path="/pipeline" element={<Placeholder title={L.page.pipelineTitle} />} />
-            <Route path="/opportunities/:id" element={<Placeholder title={L.page.opportunityTitle} />} />
+            <Route path="/pipeline" element={<PipelinePage />} />
+            <Route path="/opportunities/:id" element={<OpportunityPage />} />
             <Route path="/accounts" element={<AccountsPage />} />
             <Route path="/accounts/new" element={<AccountPage />} />
             <Route path="/accounts/:id" element={<AccountPage />} />
