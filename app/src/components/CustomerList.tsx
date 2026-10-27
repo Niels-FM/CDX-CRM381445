@@ -23,7 +23,7 @@ export default function CustomerList<T extends { id: string }>({ title, newLabel
   const [text, setText] = useState("");
   const [state, setState] = useState<ListState<T>>({ items: [], done: false });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | false>(false);
   const seq = useRef(0);
 
   const load = useCallback(
@@ -34,8 +34,9 @@ export default function CustomerList<T extends { id: string }>({ title, newLabel
       try {
         const next = await loadNextPage(from, (token) => fetchPage(filterText, token));
         if (mine === seq.current) setState(next);
-      } catch {
-        if (mine === seq.current) setError(true);
+      } catch (e) {
+        console.error("List load failed", e);
+        if (mine === seq.current) setError(e instanceof Error ? e.message : String(e));
       } finally {
         if (mine === seq.current) setLoading(false);
       }
@@ -62,7 +63,7 @@ export default function CustomerList<T extends { id: string }>({ title, newLabel
         />
         <Link className="btn primary" to={newPath}>{newLabel}</Link>
       </div>
-      {error && <p className="error">{L.customer.loadFailed}</p>}
+      {error !== false && <p className="error">{L.customer.loadFailed}: {error}</p>}
       <table className="grid">
         <thead>
           <tr>{columns.map((c) => <th key={c.header}>{c.header}</th>)}</tr>

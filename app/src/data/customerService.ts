@@ -73,7 +73,10 @@ const CONTACTS = "contacts";
 
 export function createDataverseCustomerService(client: DataClient): CustomerService {
   const must = <T>(r: { success: boolean; data: T; error?: unknown }): T => {
-    if (!r.success) throw r.error instanceof Error ? r.error : new Error("Dataverse request failed");
+    if (!r.success) {
+      const e = r.error;
+      throw e instanceof Error ? e : new Error(e ? JSON.stringify(e) : "Dataverse request failed");
+    }
     return r.data;
   };
 
