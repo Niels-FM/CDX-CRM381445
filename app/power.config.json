@@ -23,6 +23,11 @@
           "entitySetName": "contacts",
           "logicalName": "contact",
           "isHidden": false
+        },
+        "opportunities": {
+          "entitySetName": "nvdb_opportunities",
+          "logicalName": "nvdb_opportunity",
+          "isHidden": false
         }
       },
       "environmentVariableName": ""

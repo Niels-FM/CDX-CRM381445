@@ -18,5 +18,12 @@ export const dataSourcesInfo = {
     "primaryKey": "contactid",
     "dataSourceType": "Dataverse",
     "apis": {}
+  },
+  "nvdb_opportunities": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "nvdb_opportunityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
   }
 };
