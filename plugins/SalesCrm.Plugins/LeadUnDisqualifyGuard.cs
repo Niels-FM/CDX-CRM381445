@@ -12,8 +12,7 @@ namespace NVDB.SalesCrm.Plugins
     {
         public const string LeadTable = "nvdb_lead";
         public const string StatusColumn = "nvdb_leadstatus";
-        public const int DisqualifiedValue = 534210003;
-        public const string ManagerRole = "Sales Manager";
+        public const int DisqualifiedValue = QualifyLeadRules.StatusDisqualified;
         public const string PreImageName = "PreImage";
 
         public void Execute(IServiceProvider serviceProvider)
@@ -26,9 +25,9 @@ namespace NVDB.SalesCrm.Plugins
             if (!IsUnDisqualify(before, target)) return;
 
             var factory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
-            // Roles are read as SYSTEM: reps hold no privilege to read security roles. Only directly assigned roles count.
+            // Roles are read as SYSTEM: reps hold no privilege to read security roles. The role counts when assigned directly or through a team.
             var system = factory.CreateOrganizationService(null);
-            if (HasRole(system, context.InitiatingUserId, ManagerRole)) return;
+            if (RoleLookup.IsInRole(system, context.UserId, RoleLookup.ManagerRole)) return;
 
             throw new InvalidPluginExecutionException("Only a Sales Manager can un-disqualify a Lead.");
         }
@@ -43,15 +42,6 @@ namespace NVDB.SalesCrm.Plugins
         {
             var v = e.GetAttributeValue<OptionSetValue>(StatusColumn);
             return v == null ? (int?)null : v.Value;
-        }
-
-        private static bool HasRole(IOrganizationService service, Guid userId, string roleName)
-        {
-            var query = new QueryExpression("systemuserroles") { ColumnSet = new ColumnSet("systemuserid"), TopCount = 1 };
-            query.Criteria.AddCondition("systemuserid", ConditionOperator.Equal, userId);
-            var role = query.AddLink("role", "roleid", "roleid");
-            role.LinkCriteria.AddCondition("name", ConditionOperator.Equal, roleName);
-            return service.RetrieveMultiple(query).Entities.Count > 0;
         }
     }
 }

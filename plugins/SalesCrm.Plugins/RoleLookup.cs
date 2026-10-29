@@ -7,6 +7,8 @@ namespace NVDB.SalesCrm.Plugins
     /// <summary>Direct role assignment, or through a team the user belongs to. Pass a SYSTEM service: callers cannot read roles.</summary>
     internal static class RoleLookup
     {
+        public const string ManagerRole = "Sales Manager";
+
         public static bool IsInRole(IOrganizationService system, Guid userId, string roleName)
         {
             var direct = new QueryExpression("role") { ColumnSet = new ColumnSet("roleid"), TopCount = 1 };

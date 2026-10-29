@@ -12,9 +12,8 @@ namespace NVDB.SalesCrm.Plugins
     /// </summary>
     public class QualifyLead : IPlugin
     {
-        private const string ManagerRole = "Sales Manager";
         private const int OpportunityStageQualify = 534210000;
-        private const int OpportunityStatusOpen = 534210000;
+        private const int OpportunityStatusOpen = OpportunityGuardRules.StatusOpen;
         private const int QualifyProbability = 10;
 
         public void Execute(IServiceProvider serviceProvider)
@@ -28,10 +27,10 @@ namespace NVDB.SalesCrm.Plugins
             var contactId = OptionalId(context, "ContactId");
             var createOpportunity = Optional<bool>(context, "CreateOpportunity");
 
-            var lead = caller.Retrieve("nvdb_lead", leadRef.Id, new ColumnSet(true));
+            var lead = caller.Retrieve("nvdb_lead", leadRef.Id, new ColumnSet("nvdb_leadstatus", "ownerid", "nvdb_companyname", "nvdb_firstname", "nvdb_lastname", "nvdb_jobtitle", "nvdb_email", "nvdb_phone", "nvdb_topic"));
             var status = lead.GetAttributeValue<OptionSetValue>("nvdb_leadstatus")?.Value;
             var isOwner = lead.GetAttributeValue<EntityReference>("ownerid")?.Id == context.UserId;
-            var isManager = !isOwner && RoleLookup.IsInRole(factory.CreateOrganizationService(null), context.UserId, ManagerRole);
+            var isManager = !isOwner && RoleLookup.IsInRole(factory.CreateOrganizationService(null), context.UserId, RoleLookup.ManagerRole);
             Fail(QualifyLeadRules.CheckCaller(status, isOwner, isManager));
 
             var company = lead.GetAttributeValue<string>("nvdb_companyname");
