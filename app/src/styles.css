@@ -13,6 +13,12 @@ body { margin: 0; background: #f4f5f7; }
 .rail-link.active { background: var(--accent); color: #fff; }
 .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .topbar { height: 52px; background: #fff; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 16px; }
+.search-wrap { position: relative; width: 380px; max-width: 100%; }
+.search-wrap .search { width: 100%; box-sizing: border-box; }
+.search-results { position: absolute; top: 100%; left: 0; right: 0; z-index: 20; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12); padding: 8px 12px; max-height: 70vh; overflow: auto; }
+.search-results h4 { margin: 8px 0 4px; font-size: 12px; text-transform: uppercase; color: #6b7280; }
+.search-results ul { list-style: none; margin: 0; padding: 0; }
+.search-results li a { display: block; padding: 4px 0; color: inherit; text-decoration: none; }
 .search { width: 380px; max-width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 8px; }
 .content { padding: 24px; overflow: auto; }
 .muted { color: #6b7280; }
