@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { L } from "../labels.ts";
 import { formatMoney } from "../format.ts";
 import { getOpportunityService } from "../data/opportunityService.ts";
+import { getTimelineService } from "../data/timelineService.ts";
+import { buildDotMap, loadOpenActivities, type Dot } from "../domain/timeline.ts";
 import PipelineBoard from "../components/PipelineBoard.tsx";
 import OpportunityTable from "../components/OpportunityTable.tsx";
 import OpportunityForm from "../components/OpportunityForm.tsx";
@@ -38,6 +40,17 @@ export default function PipelinePage() {
   const [pending, setPending] = useState<Pending>();
 
   const [reloadKey, setReloadKey] = useState(0);
+  const [dots, setDots] = useState<Map<string, Dot>>();
+
+  useEffect(() => {
+    let live = true;
+    loadOpenActivities(getTimelineService())
+      .then((open) => live && setDots(buildDotMap(open)))
+      .catch((e) => console.error("Next-activity dots failed", e));
+    return () => {
+      live = false;
+    };
+  }, [reloadKey]);
 
   useEffect(() => {
     let live = true;
@@ -113,7 +126,7 @@ export default function PipelinePage() {
       {error && <p className="error">{L.customer.loadFailed}: {error}</p>}
       {actionError && <p className="error">{actionError}</p>}
       {loading && <p className="muted">{L.customer.loading}</p>}
-      {!loading && view === "pipeline" && <PipelineBoard opportunities={opps} onDrop={handleDrop} onAdd={setCreating} />}
+      {!loading && view === "pipeline" && <PipelineBoard opportunities={opps} dots={dots} onDrop={handleDrop} onAdd={setCreating} />}
       {!loading && view === "list" && (listed.length ? <OpportunityTable opportunities={listed} /> : !error && <p className="muted">{L.customer.empty}</p>)}
 
       {creating && (

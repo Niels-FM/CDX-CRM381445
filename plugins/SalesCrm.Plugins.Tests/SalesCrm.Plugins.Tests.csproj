@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Compile Include="..\SalesCrm.Plugins\OpportunityGuardRules.cs" Link="OpportunityGuardRules.cs" />
-  </ItemGroup>
+        <Compile Include="..\SalesCrm.Plugins\TimelineRules.cs" Link="TimelineRules.cs" />  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />

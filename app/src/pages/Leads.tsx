@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { L } from "../labels.ts";
 import CustomerList from "../components/CustomerList.tsx";
 import DuplicateWarning from "../components/DuplicateWarning.tsx";
+import Timeline from "../components/Timeline.tsx";
 import { useCurrentUserId } from "../components/useCurrentUserId.ts";
 import { getLeadService } from "../data/leadService.ts";
 import { canEdit } from "../domain/customers.ts";
@@ -189,6 +190,7 @@ export function LeadPage() {
           onDismiss={() => setMatches([])}
         />
       )}
+      {id && <Timeline type="nvdb_lead" id={id} />}
     </section>
   );
 }

@@ -39,5 +39,40 @@ export const dataSourcesInfo = {
     "primaryKey": "systemuserid",
     "dataSourceType": "Dataverse",
     "apis": {}
+  },
+  "activitypointers": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "activityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "annotations": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "annotationid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "tasks": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "activityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "phonecalls": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "activityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "appointments": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "activityid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
   }
 };

@@ -4,6 +4,7 @@ import { L } from "../labels.ts";
 import CustomerList from "../components/CustomerList.tsx";
 import DuplicateWarning from "../components/DuplicateWarning.tsx";
 import OpportunitiesPanel from "../components/OpportunitiesPanel.tsx";
+import Timeline from "../components/Timeline.tsx";
 import { useCurrentUserId } from "../components/useCurrentUserId.ts";
 import { getCustomerService } from "../data/customerService.ts";
 import { buildListFilter, canEdit, submitContact, type Account, type Contact, type ContactDraft } from "../domain/customers.ts";
@@ -140,6 +141,7 @@ export function ContactPage() {
         />
       )}
       {id && <OpportunitiesPanel kind="contact" id={id} />}
+      {id && <Timeline type="contact" id={id} />}
     </section>
   );
 }
