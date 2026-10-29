@@ -10,8 +10,6 @@ namespace NVDB.SalesCrm.Plugins
     /// </summary>
     public class OpportunityGuard : IPlugin
     {
-        private const string ManagerRole = "Sales Manager";
-
         public void Execute(IServiceProvider serviceProvider)
         {
             var context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
@@ -30,28 +28,11 @@ namespace NVDB.SalesCrm.Plugins
 
             // Only look the role up when it can matter.
             var wasClosed = currentStatus == OpportunityGuardRules.StatusWon || currentStatus == OpportunityGuardRules.StatusLost;
-            var isManager = wasClosed && IsInRole(service, context.UserId, ManagerRole);
+            var isManager = wasClosed && RoleLookup.IsInRole(service, context.UserId, RoleLookup.ManagerRole);
 
             var message = OpportunityGuardRules.Evaluate(currentStatus, newStatus, isManager, lostReason);
             if (message != null)
                 throw new InvalidPluginExecutionException(message);
-        }
-
-        /// <summary>Direct role assignment, or through a team the user belongs to.</summary>
-        private static bool IsInRole(IOrganizationService service, Guid userId, string roleName)
-        {
-            var direct = new QueryExpression("role") { ColumnSet = new ColumnSet("roleid"), TopCount = 1 };
-            direct.Criteria.AddCondition("name", ConditionOperator.Equal, roleName);
-            direct.AddLink("systemuserroles", "roleid", "roleid")
-                .LinkCriteria.AddCondition("systemuserid", ConditionOperator.Equal, userId);
-            if (service.RetrieveMultiple(direct).Entities.Count > 0) return true;
-
-            var viaTeam = new QueryExpression("role") { ColumnSet = new ColumnSet("roleid"), TopCount = 1 };
-            viaTeam.Criteria.AddCondition("name", ConditionOperator.Equal, roleName);
-            viaTeam.AddLink("teamroles", "roleid", "roleid")
-                .AddLink("teammembership", "teamid", "teamid")
-                .LinkCriteria.AddCondition("systemuserid", ConditionOperator.Equal, userId);
-            return service.RetrieveMultiple(viaTeam).Entities.Count > 0;
         }
     }
 }
