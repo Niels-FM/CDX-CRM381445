@@ -107,7 +107,24 @@ def run(rep_email, manager_email, other_rep_email):
         check(rejected(manager, "PATCH", f"annotations({own_note})", {"notetext": "by manager"}) is None, "Manager edits any Note")
         check(rejected(manager, "DELETE", f"annotations({own_note})") is None, "Manager deletes any Note")
         check(rejected(rep, "DELETE", f"tasks({own_task})") is None, "Rep deletes own Activity")
+        # Qualify re-point (#18): Timeline items created through the APIs follow the Lead to its Opportunity
+        _, h, _ = dv.request("POST", "nvdb_leads", headers=g.as_user(rep), body={
+            "nvdb_topic": "[test] timeline qualify", "nvdb_lastname": "TimelineQ", "nvdb_companyname": "[test] timeline qualify co"})
+        qlead = dv.entity_id(h)
+        created.append(("nvdb_leads", qlead))
+        qtask = call("nvdb_AddActivity", rep, {"ParentType": "nvdb_lead", "ParentId": qlead, "ActivityType": "task", "Subject": "[test] q task", "DueDate": DUE})["ActivityId"]
+        qnote = call("nvdb_AddNote", rep, {"ParentType": "nvdb_lead", "ParentId": qlead, "Text": "[test] q note"})["NoteId"]
+        q = dv.request("POST", "nvdb_QualifyLead", headers=g.as_user(rep), body={
+            "LeadId": {"@odata.type": "Microsoft.Dynamics.CRM.nvdb_lead", "nvdb_leadid": qlead}, "CreateOpportunity": True})[2]
+        created += [("nvdb_opportunities", q["OpportunityId"]), ("contacts", q["ContactId"]), ("accounts", q["AccountId"])]
+        check(dv.get(f"tasks({qtask})?$select=_regardingobjectid_value")["_regardingobjectid_value"] == q["OpportunityId"], "Qualify moves an API-created Activity to the Opportunity")
+        check(dv.get(f"annotations({qnote})?$select=_objectid_value")["_objectid_value"] == q["OpportunityId"], "Qualify moves an API-created Note to the Opportunity")
     finally:
+        for entity_set, rid in created:
+            try:
+                dv.request("DELETE", f"{entity_set}({rid})")
+            except dv.DataverseError as e:
+                dv.say(f"cleanup of {entity_set} failed: {e}")
         for table, entity_set in (("nvdb_opportunity", "nvdb_opportunities"), ("nvdb_lead", "nvdb_leads"), ("contact", "contacts"), ("account", "accounts")):
             if table in parents:
                 try:

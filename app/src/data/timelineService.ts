@@ -24,6 +24,21 @@ const ACTIVITIES = "activitypointers";
 /** Any registered data source resolves the environment for an unbound Custom API call. */
 const API_SOURCE = "accounts";
 
+const param = (name: string, type: string, format?: string) => ({ name, in: "body", required: false, type, ...(format ? { format } : {}) });
+const api = (name: string, parameters: ReturnType<typeof param>[]) => ({ path: `/api/data/v9.2/${name}`, method: "POST", parameters, responses: {} });
+
+/** The generated data source info has no Custom API metadata, so the unbound actions are declared here. */
+const withTimelineApis = {
+  ...dataSourcesInfo,
+  [API_SOURCE]: {
+    ...dataSourcesInfo[API_SOURCE],
+    apis: {
+      nvdb_AddActivity: api("nvdb_AddActivity", [param("ParentType", "string"), param("ParentId", "string"), param("ActivityType", "string"), param("Subject", "string"), param("DueDate", "string", "date-time"), param("Description", "string")]),
+      nvdb_AddNote: api("nvdb_AddNote", [param("ParentType", "string"), param("ParentId", "string"), param("Text", "string"), param("Subject", "string")]),
+    },
+  },
+};
+
 interface ActivityRow {
   activityid: string;
   activitytypecode: string;
@@ -145,6 +160,6 @@ export function createDataverseTimelineService(client: DataClient): TimelineServ
 
 let instance: TimelineService | undefined;
 export function getTimelineService(): TimelineService {
-  instance ??= createDataverseTimelineService(getClient(dataSourcesInfo));
+  instance ??= createDataverseTimelineService(getClient(withTimelineApis));
   return instance;
 }

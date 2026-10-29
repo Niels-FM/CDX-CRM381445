@@ -4,6 +4,7 @@ import { L } from "../labels.ts";
 import CustomerList from "../components/CustomerList.tsx";
 import DuplicateWarning from "../components/DuplicateWarning.tsx";
 import Timeline from "../components/Timeline.tsx";
+import QualifyDialog from "../components/QualifyDialog.tsx";
 import { useCurrentUserId } from "../components/useCurrentUserId.ts";
 import { getLeadService } from "../data/leadService.ts";
 import { canEdit } from "../domain/customers.ts";
@@ -62,6 +63,7 @@ export function LeadPage() {
   const [saving, setSaving] = useState(false);
   const [disqualifying, setDisqualifying] = useState(false);
   const [reason, setReason] = useState("");
+  const [qualifying, setQualifying] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -179,7 +181,17 @@ export function LeadPage() {
           {original.status === "disqualified" && (
             <button className="btn" disabled={saving} title={L.lead.reopenManagerOnly} onClick={() => void move("new")}>{L.lead.action.reopen}</button>
           )}
+          {!locked && !qualifying && (
+            <button className="btn primary" disabled={saving} onClick={() => setQualifying(true)}>{L.action.qualify}</button>
+          )}
         </div>
+      )}
+      {original && qualifying && (
+        <QualifyDialog
+          lead={original}
+          onCancel={() => setQualifying(false)}
+          onQualified={(r) => navigate(r.opportunityId ? `/opportunities/${r.opportunityId}` : `/leads/${original.id}`, { replace: !!r.opportunityId })}
+        />
       )}
       {matches.length > 0 && (
         <DuplicateWarning

@@ -39,6 +39,7 @@ STEPS = [
 TYPES = [s["type"] for s in STEPS] + [
     "NVDB.SalesCrm.Plugins.AddActivity",
     "NVDB.SalesCrm.Plugins.AddNote",
+    "NVDB.SalesCrm.Plugins.QualifyLead",  # Custom API nvdb_QualifyLead (build_customapis.py)
 ]
 
 

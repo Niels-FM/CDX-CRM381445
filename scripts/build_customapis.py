@@ -49,6 +49,28 @@ CUSTOM_APIS = [
         ],
         "outputs": [_p("NoteId", TYPE_GUID, optional=False)],
     },
+    {
+        "uniquename": "nvdb_QualifyLead",
+        "name": "Qualify Lead",
+        "description": "Qualifies a Lead into an Account, a Contact and optionally an Opportunity in one transaction, as the caller.",
+        "plugintype": PLUGIN_NAMESPACE + "QualifyLead",
+        "bindingtype": 0,
+        "isfunction": False,
+        "inputs": [
+            _p("LeadId", TYPE_ENTITYREFERENCE, optional=False, entity="nvdb_lead", description="The Lead to qualify"),
+            _p("AccountId", TYPE_GUID, description="Existing Account to use; omit to create one from the Lead"),
+            _p("ContactId", TYPE_GUID, description="Existing Contact to use; omit to create one from the Lead"),
+            _p("CreateOpportunity", TYPE_BOOLEAN, optional=False, description="Create an Opportunity; required because an unset Boolean cannot default to true"),
+            _p("OpportunityName", TYPE_STRING, description="Opportunity name (default: the Lead topic)"),
+            _p("EstimatedRevenue", TYPE_MONEY, description="Opportunity estimated revenue"),
+            _p("EstimatedCloseDate", TYPE_DATETIME, description="Opportunity estimated close date"),
+        ],
+        "outputs": [
+            _p("AccountId", TYPE_GUID, optional=False),
+            _p("ContactId", TYPE_GUID, optional=False),
+            _p("OpportunityId", TYPE_GUID, optional=False, description="Empty Guid when no Opportunity was created"),
+        ],
+    }
 ]
 
 
