@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="AccountId">
+  <description default="Existing Account to use; omit to create one from the Lead">
+    <label description="Existing Account to use; omit to create one from the Lead" languagecode="1033" />
+  </description>
+  <displayname default="AccountId">
+    <label description="AccountId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>AccountId</name>
+  <type>12</type>
+</customapirequestparameter>

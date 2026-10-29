@@ -1,0 +1,13 @@
+<customapirequestparameter uniquename="LeadId">
+  <description default="The Lead to qualify">
+    <label description="The Lead to qualify" languagecode="1033" />
+  </description>
+  <displayname default="LeadId">
+    <label description="LeadId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>0</isoptional>
+  <logicalentityname>nvdb_lead</logicalentityname>
+  <name>LeadId</name>
+  <type>5</type>
+</customapirequestparameter>

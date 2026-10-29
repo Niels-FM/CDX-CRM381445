@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="ContactId">
+  <description default="Existing Contact to use; omit to create one from the Lead">
+    <label description="Existing Contact to use; omit to create one from the Lead" languagecode="1033" />
+  </description>
+  <displayname default="ContactId">
+    <label description="ContactId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>ContactId</name>
+  <type>12</type>
+</customapirequestparameter>

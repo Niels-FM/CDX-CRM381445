@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="EstimatedRevenue">
+  <description default="Opportunity estimated revenue">
+    <label description="Opportunity estimated revenue" languagecode="1033" />
+  </description>
+  <displayname default="EstimatedRevenue">
+    <label description="EstimatedRevenue" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>EstimatedRevenue</name>
+  <type>8</type>
+</customapirequestparameter>

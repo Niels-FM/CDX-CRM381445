@@ -34,6 +34,7 @@
     <RolePrivilege name="prvDeletenvdb_Opportunity" level="Local" />
     <RolePrivilege name="prvReadAccount" level="Local" />
     <RolePrivilege name="prvReadActivity" level="Local" />
+    <RolePrivilege name="prvReadAsyncOperation" level="Global" />
     <RolePrivilege name="prvReadBusinessUnit" level="Global" />
     <RolePrivilege name="prvReadCanvasApp" level="Global" />
     <RolePrivilege name="prvReadContact" level="Local" />

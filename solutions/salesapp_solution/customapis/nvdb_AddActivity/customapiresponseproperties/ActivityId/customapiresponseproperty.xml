@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ActivityId">
+  <description default="ActivityId">
+    <label description="ActivityId" languagecode="1033" />
+  </description>
+  <displayname default="ActivityId">
+    <label description="ActivityId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>ActivityId</name>
+  <type>12</type>
+</customapiresponseproperty>

@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="EstimatedCloseDate">
+  <description default="Opportunity estimated close date">
+    <label description="Opportunity estimated close date" languagecode="1033" />
+  </description>
+  <displayname default="EstimatedCloseDate">
+    <label description="EstimatedCloseDate" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>EstimatedCloseDate</name>
+  <type>1</type>
+</customapirequestparameter>

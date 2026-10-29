@@ -1,0 +1,18 @@
+<customapi uniquename="nvdb_AddNote">
+  <allowedcustomprocessingsteptype>0</allowedcustomprocessingsteptype>
+  <bindingtype>0</bindingtype>
+  <description default="Creates a Note on a Lead, Opportunity, Account or Contact, as the caller.">
+    <label description="Creates a Note on a Lead, Opportunity, Account or Contact, as the caller." languagecode="1033" />
+  </description>
+  <displayname default="Add Note">
+    <label description="Add Note" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isfunction>0</isfunction>
+  <isprivate>0</isprivate>
+  <name>Add Note</name>
+  <plugintypeid>
+    <plugintypeexportkey>c115adaa-99d3-f111-a059-7ced8d3bc3e1</plugintypeexportkey>
+  </plugintypeid>
+  <workflowsdkstepenabled>0</workflowsdkstepenabled>
+</customapi>
