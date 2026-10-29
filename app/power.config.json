@@ -38,6 +38,31 @@
           "entitySetName": "systemusers",
           "logicalName": "systemuser",
           "isHidden": false
+        },
+        "activitypointers": {
+          "entitySetName": "activitypointers",
+          "logicalName": "activitypointer",
+          "isHidden": false
+        },
+        "annotations": {
+          "entitySetName": "annotations",
+          "logicalName": "annotation",
+          "isHidden": false
+        },
+        "tasks": {
+          "entitySetName": "tasks",
+          "logicalName": "task",
+          "isHidden": false
+        },
+        "phonecalls": {
+          "entitySetName": "phonecalls",
+          "logicalName": "phonecall",
+          "isHidden": false
+        },
+        "appointments": {
+          "entitySetName": "appointments",
+          "logicalName": "appointment",
+          "isHidden": false
         }
       },
       "environmentVariableName": ""

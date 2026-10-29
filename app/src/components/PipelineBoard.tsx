@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { L } from "../labels.ts";
 import { formatMoney } from "../format.ts";
 import { buildPipeline, type DropTarget, type Opportunity, type Stage } from "../domain/pipeline.ts";
+import type { Dot } from "../domain/timeline.ts";
 
 interface Props {
   opportunities: Opportunity[];
+  dots?: Map<string, Dot>;
   onDrop: (id: string, target: DropTarget) => void;
   onAdd: (stage: Stage) => void;
 }
@@ -13,7 +15,7 @@ interface Props {
 const DRAG_TYPE = "text/opportunity-id";
 
 /** Kanban: chevron Stage headers, draggable cards, add per column and Won/Lost drop zones while dragging. */
-export default function PipelineBoard({ opportunities, onDrop, onAdd }: Props) {
+export default function PipelineBoard({ opportunities, dots, onDrop, onAdd }: Props) {
   const [dragging, setDragging] = useState(false);
   const [over, setOver] = useState<string>();
 
@@ -60,7 +62,10 @@ export default function PipelineBoard({ opportunities, onDrop, onAdd }: Props) {
                   <Link to={`/opportunities/${o.id}`} draggable={false}><strong>{o.name}</strong></Link>
                   <div className="org">{o.accountName}</div>
                   {o.contactName && <div className="org">{o.contactName}</div>}
-                  <div className="foot">{formatMoney(o.estimatedRevenue)}</div>
+                  <div className="foot">
+                    <span className={`dot ${dots?.get(o.id) ?? "none"}`} title={L.timeline.dot[dots?.get(o.id) ?? "none"]} />
+                    {formatMoney(o.estimatedRevenue)}
+                  </div>
                 </div>
               ))}
             </div>

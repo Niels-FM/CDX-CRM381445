@@ -37,6 +37,8 @@ STEPS = [
 ]
 # Plug-in types without a step (Custom API implementations); the Custom API tickets append to this list.
 TYPES = [s["type"] for s in STEPS] + [
+    "NVDB.SalesCrm.Plugins.AddActivity",
+    "NVDB.SalesCrm.Plugins.AddNote",
     "NVDB.SalesCrm.Plugins.QualifyLead",  # Custom API nvdb_QualifyLead (build_customapis.py)
 ]
 

@@ -4,6 +4,7 @@ import { L } from "../labels.ts";
 import { formatMoney } from "../format.ts";
 import { getOpportunityService } from "../data/opportunityService.ts";
 import OpportunityForm from "../components/OpportunityForm.tsx";
+import Timeline from "../components/Timeline.tsx";
 import { ConfirmWonDialog, LostReasonDialog } from "../components/CloseDialogs.tsx";
 import {
   STAGES,
@@ -103,6 +104,7 @@ export default function OpportunityPage() {
         {closed && <p className="muted">{L.pipeline.closedReadOnly}</p>}
         {actionError && <p className="error">{actionError}</p>}
         <OpportunityForm key={`${opp.id}-${opp.status}-${opp.stage}-${opp.probability}`} original={opp} disabled={closed} onSaved={setOpp} />
+        <Timeline type="nvdb_opportunity" id={opp.id} />
       </div>
       {dialog === "won" && (
         <ConfirmWonDialog

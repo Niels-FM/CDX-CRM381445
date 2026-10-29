@@ -18,6 +18,38 @@ def _p(uniquename, kind, optional=True, entity=None, description=None):
 
 CUSTOM_APIS = [
     {
+        "uniquename": "nvdb_AddActivity",
+        "name": "Add Activity",
+        "description": "Creates a Task, Phone Call or Appointment regarding a Lead, Opportunity, Account or Contact, as the caller.",
+        "plugintype": PLUGIN_NAMESPACE + "AddActivity",
+        "bindingtype": 0,
+        "isfunction": False,
+        "inputs": [
+            _p("ParentType", TYPE_STRING, optional=False, description="nvdb_lead, nvdb_opportunity, account or contact"),
+            _p("ParentId", TYPE_GUID, optional=False, description="Id of the parent record"),
+            _p("ActivityType", TYPE_STRING, optional=False, description="task, phonecall or appointment"),
+            _p("Subject", TYPE_STRING, optional=False),
+            _p("DueDate", TYPE_DATETIME, optional=False),
+            _p("Description", TYPE_STRING),
+        ],
+        "outputs": [_p("ActivityId", TYPE_GUID, optional=False)],
+    },
+    {
+        "uniquename": "nvdb_AddNote",
+        "name": "Add Note",
+        "description": "Creates a Note on a Lead, Opportunity, Account or Contact, as the caller.",
+        "plugintype": PLUGIN_NAMESPACE + "AddNote",
+        "bindingtype": 0,
+        "isfunction": False,
+        "inputs": [
+            _p("ParentType", TYPE_STRING, optional=False, description="nvdb_lead, nvdb_opportunity, account or contact"),
+            _p("ParentId", TYPE_GUID, optional=False, description="Id of the parent record"),
+            _p("Text", TYPE_STRING, optional=False),
+            _p("Subject", TYPE_STRING),
+        ],
+        "outputs": [_p("NoteId", TYPE_GUID, optional=False)],
+    },
+    {
         "uniquename": "nvdb_QualifyLead",
         "name": "Qualify Lead",
         "description": "Qualifies a Lead into an Account, a Contact and optionally an Opportunity in one transaction, as the caller.",

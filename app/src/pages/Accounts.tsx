@@ -4,6 +4,7 @@ import { L } from "../labels.ts";
 import CustomerList from "../components/CustomerList.tsx";
 import DuplicateWarning from "../components/DuplicateWarning.tsx";
 import OpportunitiesPanel from "../components/OpportunitiesPanel.tsx";
+import Timeline from "../components/Timeline.tsx";
 import { useCurrentUserId } from "../components/useCurrentUserId.ts";
 import { getCustomerService } from "../data/customerService.ts";
 import { buildListFilter, canEdit, submitAccount, type Account, type AccountDraft } from "../domain/customers.ts";
@@ -103,6 +104,7 @@ export function AccountPage() {
         />
       )}
       {id && <OpportunitiesPanel kind="account" id={id} />}
+      {id && <Timeline type="account" id={id} />}
     </section>
   );
 }
