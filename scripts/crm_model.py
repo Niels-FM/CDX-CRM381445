@@ -86,7 +86,7 @@ ROLE_NAMES = {REP: "Sales Rep", MANAGER: "Sales Manager"}
 _CUSTOM = ("nvdb_lead", "nvdb_opportunity")
 _PARTIES = ("account", "contact")
 _ACTIVITY = ("task", "phonecall", "appointment", "annotation")
-_REFERENCE = ("systemuser", "team", "businessunit", "transactioncurrency", "organization", "canvasapp", "plugintype", "pluginassembly")
+_REFERENCE = ("systemuser", "team", "businessunit", "transactioncurrency", "organization", "asyncoperation", "canvasapp", "plugintype", "pluginassembly")
 
 # Privilege-name suffix after prv<Action> for each table (activity types share the Activity privileges).
 PRIVILEGE_ENTITY = {
@@ -104,6 +104,7 @@ PRIVILEGE_ENTITY = {
     "businessunit": "BusinessUnit",
     "transactioncurrency": "TransactionCurrency",
     "organization": "Organization",
+    "asyncoperation": "AsyncOperation",  # System Job: read when activities are created or changed
     "canvasapp": "CanvasApp",
     "plugintype": "PluginType",  # the platform reads the plug-in type as the calling user before running a step
         "pluginassembly": "PluginAssembly",
