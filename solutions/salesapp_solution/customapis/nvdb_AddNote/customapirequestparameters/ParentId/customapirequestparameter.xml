@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="ParentId">
+  <description default="Id of the parent record">
+    <label description="Id of the parent record" languagecode="1033" />
+  </description>
+  <displayname default="ParentId">
+    <label description="ParentId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>0</isoptional>
+  <name>ParentId</name>
+  <type>12</type>
+</customapirequestparameter>

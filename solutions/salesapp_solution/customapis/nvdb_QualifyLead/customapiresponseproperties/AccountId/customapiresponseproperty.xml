@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="AccountId">
+  <description default="AccountId">
+    <label description="AccountId" languagecode="1033" />
+  </description>
+  <displayname default="AccountId">
+    <label description="AccountId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>AccountId</name>
+  <type>12</type>
+</customapiresponseproperty>

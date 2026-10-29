@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "appId": "4a24f8a6-6ee0-4d71-bc28-4ce368255a3b",
+  "appDisplayName": "Sales CRM",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "2babf09f-db97-edde-a7ed-bfd1c761ea04",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {
+    "default.cds": {
+      "dataSources": {
+        "accounts": {
+          "entitySetName": "accounts",
+          "logicalName": "account",
+          "isHidden": false
+        },
+        "contacts": {
+          "entitySetName": "contacts",
+          "logicalName": "contact",
+          "isHidden": false
+        },
+        "leads": {
+          "entitySetName": "nvdb_leads",
+          "logicalName": "nvdb_lead",
+          "isHidden": false
+        },
+        "opportunities": {
+          "entitySetName": "nvdb_opportunities",
+          "logicalName": "nvdb_opportunity",
+          "isHidden": false
+        },
+        "users": {
+          "entitySetName": "systemusers",
+          "logicalName": "systemuser",
+          "isHidden": false
+        },
+        "activitypointers": {
+          "entitySetName": "activitypointers",
+          "logicalName": "activitypointer",
+          "isHidden": false
+        },
+        "annotations": {
+          "entitySetName": "annotations",
+          "logicalName": "annotation",
+          "isHidden": false
+        },
+        "tasks": {
+          "entitySetName": "tasks",
+          "logicalName": "task",
+          "isHidden": false
+        },
+        "phonecalls": {
+          "entitySetName": "phonecalls",
+          "logicalName": "phonecall",
+          "isHidden": false
+        },
+        "appointments": {
+          "entitySetName": "appointments",
+          "logicalName": "appointment",
+          "isHidden": false
+        }
+      },
+      "environmentVariableName": ""
+    }
+  }
+}

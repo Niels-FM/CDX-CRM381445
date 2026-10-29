@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="NoteId">
+  <description default="NoteId">
+    <label description="NoteId" languagecode="1033" />
+  </description>
+  <displayname default="NoteId">
+    <label description="NoteId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>NoteId</name>
+  <type>12</type>
+</customapiresponseproperty>

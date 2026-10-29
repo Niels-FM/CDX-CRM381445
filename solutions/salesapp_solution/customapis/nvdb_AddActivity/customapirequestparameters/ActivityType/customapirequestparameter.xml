@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="ActivityType">
+  <description default="task, phonecall or appointment">
+    <label description="task, phonecall or appointment" languagecode="1033" />
+  </description>
+  <displayname default="ActivityType">
+    <label description="ActivityType" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>0</isoptional>
+  <name>ActivityType</name>
+  <type>10</type>
+</customapirequestparameter>

@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="OpportunityName">
+  <description default="Opportunity name (default: the Lead topic)">
+    <label description="Opportunity name (default: the Lead topic)" languagecode="1033" />
+  </description>
+  <displayname default="OpportunityName">
+    <label description="OpportunityName" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>OpportunityName</name>
+  <type>10</type>
+</customapirequestparameter>

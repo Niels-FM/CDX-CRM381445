@@ -1,0 +1,18 @@
+<customapi uniquename="nvdb_QualifyLead">
+  <allowedcustomprocessingsteptype>0</allowedcustomprocessingsteptype>
+  <bindingtype>0</bindingtype>
+  <description default="Qualifies a Lead into an Account, a Contact and optionally an Opportunity in one transaction, as the caller.">
+    <label description="Qualifies a Lead into an Account, a Contact and optionally an Opportunity in one transaction, as the caller." languagecode="1033" />
+  </description>
+  <displayname default="Qualify Lead">
+    <label description="Qualify Lead" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isfunction>0</isfunction>
+  <isprivate>0</isprivate>
+  <name>Qualify Lead</name>
+  <plugintypeid>
+    <plugintypeexportkey>c0a38432-94d3-f111-a059-7ced8d3bc3e1</plugintypeexportkey>
+  </plugintypeid>
+  <workflowsdkstepenabled>0</workflowsdkstepenabled>
+</customapi>

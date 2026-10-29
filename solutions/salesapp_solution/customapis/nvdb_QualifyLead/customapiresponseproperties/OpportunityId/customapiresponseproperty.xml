@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="OpportunityId">
+  <description default="Empty Guid when no Opportunity was created">
+    <label description="Empty Guid when no Opportunity was created" languagecode="1033" />
+  </description>
+  <displayname default="OpportunityId">
+    <label description="OpportunityId" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>OpportunityId</name>
+  <type>12</type>
+</customapiresponseproperty>

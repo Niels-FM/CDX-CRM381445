@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PluginAssembly FullName="NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginAssemblyId="3af0251b-1ed2-f111-a059-0022480ab59f" CustomizationLevel="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IsolationMode>2</IsolationMode>
+  <SourceType>0</SourceType>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <FileName>/PluginAssemblies/NVDBSalesCrmPlugins-3AF0251B-1ED2-F111-A059-0022480AB59F/NVDBSalesCrmPlugins.dll</FileName>
+  <PluginTypes>
+    <PluginType AssemblyQualifiedName="NVDB.SalesCrm.Plugins.AddActivity, NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginTypeId="16ad18a8-99d3-f111-a059-0022480ab59f" Name="NVDB.SalesCrm.Plugins.AddActivity">
+      <FriendlyName>AddActivity</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="NVDB.SalesCrm.Plugins.AddNote, NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginTypeId="c115adaa-99d3-f111-a059-7ced8d3bc3e1" Name="NVDB.SalesCrm.Plugins.AddNote">
+      <FriendlyName>AddNote</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="NVDB.SalesCrm.Plugins.LeadUnDisqualifyGuard, NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginTypeId="09f1321e-1ed2-f111-a059-000d3a312299" Name="NVDB.SalesCrm.Plugins.LeadUnDisqualifyGuard">
+      <FriendlyName>LeadUnDisqualifyGuard</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="NVDB.SalesCrm.Plugins.OpportunityGuard, NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginTypeId="0cf1321e-1ed2-f111-a059-000d3a312299" Name="NVDB.SalesCrm.Plugins.OpportunityGuard">
+      <FriendlyName>OpportunityGuard</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="NVDB.SalesCrm.Plugins.QualifyLead, NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" PluginTypeId="c0a38432-94d3-f111-a059-7ced8d3bc3e1" Name="NVDB.SalesCrm.Plugins.QualifyLead">
+      <FriendlyName>QualifyLead</FriendlyName>
+    </PluginType>
+  </PluginTypes>
+</PluginAssembly>

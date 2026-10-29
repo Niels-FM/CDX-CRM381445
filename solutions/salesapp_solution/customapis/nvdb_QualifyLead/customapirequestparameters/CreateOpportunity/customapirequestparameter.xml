@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="CreateOpportunity">
+  <description default="Create an Opportunity; required because an unset Boolean cannot default to true">
+    <label description="Create an Opportunity; required because an unset Boolean cannot default to true" languagecode="1033" />
+  </description>
+  <displayname default="CreateOpportunity">
+    <label description="CreateOpportunity" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>CreateOpportunity</name>
+  <type>0</type>
+</customapirequestparameter>

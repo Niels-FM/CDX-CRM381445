@@ -1,0 +1,18 @@
+<customapi uniquename="nvdb_AddActivity">
+  <allowedcustomprocessingsteptype>0</allowedcustomprocessingsteptype>
+  <bindingtype>0</bindingtype>
+  <description default="Creates a Task, Phone Call or Appointment regarding a Lead, Opportunity, Account or Contact, as the caller.">
+    <label description="Creates a Task, Phone Call or Appointment regarding a Lead, Opportunity, Account or Contact, as the caller." languagecode="1033" />
+  </description>
+  <displayname default="Add Activity">
+    <label description="Add Activity" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isfunction>0</isfunction>
+  <isprivate>0</isprivate>
+  <name>Add Activity</name>
+  <plugintypeid>
+    <plugintypeexportkey>16ad18a8-99d3-f111-a059-0022480ab59f</plugintypeexportkey>
+  </plugintypeid>
+  <workflowsdkstepenabled>0</workflowsdkstepenabled>
+</customapi>
