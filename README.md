@@ -30,6 +30,19 @@ Beyond the matrix in ticket #5, roles also get Append/AppendTo on activities and
 3. Run `python scripts\seed.py --owners repA@domain repB@domain` to spread Leads and Opportunities over both reps.
 4. Share the code app with the three users.
 
+## Assign roles and share the app (manual)
+
+Neither is scripted. Do both for every new user:
+
+1. **Licence**: the user needs a Power Apps Premium (or pay-as-you-go environment) licence and must be added to the environment (Power Platform admin center > Environments > the environment > Settings > Users + permissions > Users > Add user).
+2. **Role**: open the user > Manage security roles > tick exactly one of **Sales Rep** (own Leads and Opportunities, reads all Accounts and Contacts) or **Sales Manager** (whole business unit, Delete, Assign, reopen, un-disqualify). Do not add a broad built-in role such as Basic User; it would widen what the user sees. The Manager guards check the role assigned to the user directly, not through a team.
+3. **Share the app**: make.powerapps.com > the environment > Apps > the code app (`nvdb_salescrm`) > Share, add the user (or a security group) and tick the option to also grant the data permissions if offered. Co-owner is not needed.
+4. Have the user open the app and run the checklist in `docs\test-plan.md`.
+
+## Tests and release
+
+Acceptance gate, live API-seam tests and the manual per-role checklist: `docs\test-plan.md`. A release is a version bump of `salesapp_solution` (`Other\Solution.xml`, currently 1.0.1.0) plus a git tag.
+
 ## App (`app\`)
 
 `npm install`, `npm run build`, `npm run lint`, `npm test` (vitest). All Dataverse terms live in `src\labels.ts`.
