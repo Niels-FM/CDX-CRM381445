@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>nvdb_salescrm_38718</Name>
-  <AppVersion>2026-10-29T11:50:34Z</AppVersion>
+  <AppVersion>2026-10-29T13:43:08Z</AppVersion>
   <Status>Ready</Status>
   <CreatedByClientVersion>0.0.0.0</CreatedByClientVersion>
   <MinClientVersion>0.0.0.0</MinClientVersion>
@@ -15,7 +15,7 @@
   <Publisher xsi:nil="true"></Publisher>
   <AuthorizationReferences>[]</AuthorizationReferences>
   <ConnectionReferences>{}</ConnectionReferences>
-  <DatabaseReferences>{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified","environmentVariableName":""}},"dataSources":{"accounts":{"entitySetName":"accounts","logicalName":"account"},"contacts":{"entitySetName":"contacts","logicalName":"contact"},"leads":{"entitySetName":"nvdb_leads","logicalName":"nvdb_lead"},"opportunities":{"entitySetName":"nvdb_opportunities","logicalName":"nvdb_opportunity"},"users":{"entitySetName":"systemusers","logicalName":"systemuser"}}}}</DatabaseReferences>
+  <DatabaseReferences>{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified","environmentVariableName":""}},"dataSources":{"accounts":{"entitySetName":"accounts","logicalName":"account"},"contacts":{"entitySetName":"contacts","logicalName":"contact"},"leads":{"entitySetName":"nvdb_leads","logicalName":"nvdb_lead"},"opportunities":{"entitySetName":"nvdb_opportunities","logicalName":"nvdb_opportunity"},"users":{"entitySetName":"systemusers","logicalName":"systemuser"},"activitypointers":{"entitySetName":"activitypointers","logicalName":"activitypointer"},"annotations":{"entitySetName":"annotations","logicalName":"annotation"},"tasks":{"entitySetName":"tasks","logicalName":"task"},"phonecalls":{"entitySetName":"phonecalls","logicalName":"phonecall"},"appointments":{"entitySetName":"appointments","logicalName":"appointment"}}}}</DatabaseReferences>
   <AppComponents>[]</AppComponents>
   <AppComponentDependencies>[]</AppComponentDependencies>
   <CanConsumeAppPass>1</CanConsumeAppPass>
@@ -24,11 +24,11 @@
   <AdminControlBypassConsent>0</AdminControlBypassConsent>
   <EmbeddedApp xsi:nil="true"></EmbeddedApp>
   <IntroducedVersion>1.0</IntroducedVersion>
-  <CdsDependencies>{"cdsdependencies":[{"logicalname":"account","componenttype":1},{"logicalname":"contact","componenttype":1},{"logicalname":"nvdb_lead","componenttype":1},{"logicalname":"nvdb_opportunity","componenttype":1},{"logicalname":"systemuser","componenttype":1}]}</CdsDependencies>
+  <CdsDependencies>{"cdsdependencies":[{"logicalname":"account","componenttype":1},{"logicalname":"contact","componenttype":1},{"logicalname":"nvdb_lead","componenttype":1},{"logicalname":"nvdb_opportunity","componenttype":1},{"logicalname":"systemuser","componenttype":1},{"logicalname":"activitypointer","componenttype":1},{"logicalname":"annotation","componenttype":1},{"logicalname":"task","componenttype":1},{"logicalname":"phonecall","componenttype":1},{"logicalname":"appointment","componenttype":1}]}</CdsDependencies>
   <IsCustomizable>1</IsCustomizable>
   <CodeAppPackageUris>
     <CodeAppPackageUri>/CanvasApps/nvdb_salescrm_38718_CodeAppPackages/index.html_ContentType_text/html</CodeAppPackageUri>
-    <CodeAppPackageUri>/CanvasApps/nvdb_salescrm_38718_CodeAppPackages/assets/index-BaKD5C5M.css_ContentType_text/css</CodeAppPackageUri>
-    <CodeAppPackageUri>/CanvasApps/nvdb_salescrm_38718_CodeAppPackages/assets/index-HHZ9Pqga.js_ContentType_application/javascript</CodeAppPackageUri>
+    <CodeAppPackageUri>/CanvasApps/nvdb_salescrm_38718_CodeAppPackages/assets/index-C0cLiaFI.js_ContentType_application/javascript</CodeAppPackageUri>
+    <CodeAppPackageUri>/CanvasApps/nvdb_salescrm_38718_CodeAppPackages/assets/index-xzCtSBbG.css_ContentType_text/css</CodeAppPackageUri>
   </CodeAppPackageUris>
 </CanvasApp>
