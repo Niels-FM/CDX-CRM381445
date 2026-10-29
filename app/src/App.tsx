@@ -6,6 +6,7 @@ import { ContactPage, ContactsPage } from "./pages/Contacts.tsx";
 import { LeadPage, LeadsPage } from "./pages/Leads.tsx";
 import PipelinePage from "./pages/Pipeline.tsx";
 import OpportunityPage from "./pages/Opportunity.tsx";
+import GlobalSearch from "./components/GlobalSearch.tsx";
 import { L } from "./labels.ts";
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
       <IconRail />
       <div className="main">
         <header className="topbar">
-          <input className="search" type="search" placeholder={L.search.placeholder} aria-label={L.search.placeholder} disabled />
+          <GlobalSearch />
         </header>
         <main className="content">
           <Routes>

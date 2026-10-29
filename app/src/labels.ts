@@ -72,7 +72,13 @@ export const L = {
     lockedNote: "Qualified and Disqualified Leads cannot be edited.",
     reopenManagerOnly: "Only a Sales Manager can un-disqualify a Lead.",
   },
-  search: { placeholder: "Search Accounts, Contacts, Leads and Opportunities" },
+  search: {
+    placeholder: "Search Accounts, Contacts, Leads and Opportunities",
+    results: "Search results",
+    searching: "Searching…",
+    noMatches: "No matches",
+    failed: (kinds: string) => `Could not search: ${kinds}`,
+  },
   pipeline: {
     viewPipeline: "Pipeline",
     viewList: "List",
