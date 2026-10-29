@@ -113,3 +113,18 @@ body { margin: 0; background: #f4f5f7; }
 .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: #9ca3af; }
 .dot.planned { background: #16a34a; }
 .dot.overdue { background: #dc2626; }
+.segmented { display: flex; gap: 4px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi { background: #fff; border-radius: 8px; padding: 12px 16px; }
+.kpi-label { font-size: 13px; color: #6b7280; }
+.kpi-value { font-size: 26px; font-weight: 600; }
+.dash-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.panel { background: #fff; border-radius: 8px; padding: 12px 16px; }
+.panel h3 { margin: 0 0 12px; font-size: 15px; }
+.bars { display: flex; gap: 16px; align-items: flex-end; height: 220px; }
+.bar-col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; text-align: center; font-size: 12px; }
+.bar { background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; }
+.bar-value { margin-bottom: 4px; }
+.bar-label { margin-top: 6px; color: #6b7280; }
+.today { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.today li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }

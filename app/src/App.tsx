@@ -4,6 +4,7 @@ import Placeholder from "./pages/Placeholder.tsx";
 import { AccountPage, AccountsPage } from "./pages/Accounts.tsx";
 import { ContactPage, ContactsPage } from "./pages/Contacts.tsx";
 import { LeadPage, LeadsPage } from "./pages/Leads.tsx";
+import DashboardPage from "./pages/Dashboard.tsx";
 import PipelinePage from "./pages/Pipeline.tsx";
 import OpportunityPage from "./pages/Opportunity.tsx";
 import GlobalSearch from "./components/GlobalSearch.tsx";
@@ -19,7 +20,7 @@ export default function App() {
         </header>
         <main className="content">
           <Routes>
-            <Route path="/" element={<Placeholder title={L.page.dashboardTitle} />} />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="/leads" element={<LeadsPage />} />
             <Route path="/leads/new" element={<LeadPage />} />
             <Route path="/leads/:id" element={<LeadPage />} />
