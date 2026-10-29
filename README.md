@@ -37,7 +37,8 @@ Push: `python scripts\deploy.py --app` (runs `pa app init` if `power.config.json
 
 ## Status
 
-- Not done: the first `pa app push` and opening the app as a test user. `pa` needs an interactive MFA browser sign-in for this tenant, which could not be done unattended. The app builds (`deploy.py --app --no-push`).
+- Done: `pa app push` (`deploy.py --app`) succeeded and `solutions\` was re-exported (plug-in assembly, steps, roles, canvas app). Not done: opening the app as a test user; Leads and Pipeline still need a manual check in the browser.
+- Both plug-in guards pass live (`scripts\test_undisqualify_guard.py`, `scripts\test_opportunity_guard.py`). Sales Rep and Sales Manager need Read on `plugintype` and `pluginassembly` (in the role matrix in `crm_model.py`), or every guarded Update fails with 403 `missing prvReadPluginType`.
 - The plug-in stage builds `plugins\SalesCrm.Plugins` (net462, signed; one assembly, later Custom API types are added to it) and registers it with `register_plugin.py` (Web API: assembly, types, steps, images, inside `salesapp_solution`; idempotent). `pac plugin push` was not used because it only uploads an existing assembly and cannot register steps. Needs `dotnet` on PATH. Changing the signing key needs delete + re-register of the assembly.
 - `pac solution export` hit MFA, so `export_solution.py` uses the Web API ExportSolution action plus `pac solution unpack`.
 - The test users are documented, not created.
@@ -45,4 +46,4 @@ Push: `python scripts\deploy.py --app` (runs `pa app init` if `power.config.json
 - Leads (#17): list with filter box (name, company, email), create/edit, Status New/Contacted/Disqualified (Qualified is set only by Qualify, #18), disqualify with required reason, soft duplicate warning on same email or name+company. Client logic is in `app\src\domain\leads.ts` (unit tested on a mocked `LeadService`); `app\src\data\leadService.ts` uses the generated `nvdb_leads` data source. Qualified and Disqualified Leads are read-only.
 - Un-disqualify guard (#17): plug-in `LeadUnDisqualifyGuard` on `nvdb_lead` Update, pre-operation (filtering attribute `nvdb_leadstatus`, pre-image `PreImage`). It rejects moving a Lead out of Disqualified unless the caller directly holds the Sales Manager role (roles via teams are not checked; System Administrators are rejected too). The app shows the button to the owner and surfaces the server error for a Rep; the app does not know the user's role.
 - Live check of the guard and of Lead visibility: `python scripts\test_undisqualify_guard.py` (impersonates demo users `alans@`, `amya@`, `allieb@` via MSCRMCallerID, grants Sales Rep / Sales Manager for the run and removes them again; override with `--rep --other-rep --manager`). Right after (re)registering the plug-in the platform may answer "Error while trying to get the assembly" for a few minutes; rerun.
-- Not done for #17: the Lead UI is not verified in the browser as a test user (no `pa app push` by this ticket); `solutions\` was not re-exported after registering the plug-in (`python scripts\export_solution.py`).
+- Not done for #17: the Lead UI is not verified in the browser as a test user.

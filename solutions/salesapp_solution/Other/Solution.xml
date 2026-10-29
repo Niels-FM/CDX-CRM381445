@@ -84,6 +84,10 @@
       <RootComponent type="1" schemaName="nvdb_opportunity" behavior="0" />
       <RootComponent type="20" id="{003e12bd-4ed1-f111-a059-0022480ab59f}" behavior="0" />
       <RootComponent type="20" id="{1cdc0693-4ed1-f111-a059-0022480ab59f}" behavior="0" />
+      <RootComponent type="300" schemaName="nvdb_salescrm_38718" behavior="0" />
+      <RootComponent type="91" id="{3af0251b-1ed2-f111-a059-0022480ab59f}" schemaName="NVDB.SalesCrm.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8dcbc2ea81b81ee3" behavior="0" />
+      <RootComponent type="92" id="{5f1f6929-1ed2-f111-a059-7ced8d3bc3e1}" behavior="0" />
+      <RootComponent type="92" id="{b02da622-1ed2-f111-a059-7ced8d3bc3e1}" behavior="0" />
     </RootComponents>
     <MissingDependencies />
   </SolutionManifest>

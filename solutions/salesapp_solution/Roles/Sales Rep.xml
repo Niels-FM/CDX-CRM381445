@@ -37,6 +37,8 @@
     <RolePrivilege name="prvReadnvdb_Lead" level="Basic" />
     <RolePrivilege name="prvReadnvdb_Opportunity" level="Basic" />
     <RolePrivilege name="prvReadOrganization" level="Global" />
+    <RolePrivilege name="prvReadPluginAssembly" level="Global" />
+    <RolePrivilege name="prvReadPluginType" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
     <RolePrivilege name="prvReadTeam" level="Global" />
